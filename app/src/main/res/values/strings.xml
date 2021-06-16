@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Weather API</string>
+    <string name="wallpaper">Wallpaper</string>
+    <string name="degrees_symbol">°</string>
+    <string name="feels_like">Feels like</string>
+    <string name="wind_speed">Wind speed</string>
+    <string name="clouds">Clouds %</string>
+    <string name="sunrise">Sunrise</string>
+    <string name="humidity">Humidity</string>
+    <string name="wind_direction">Wind direction</string>
+    <string name="pressure">Pressure</string>
+    <string name="sunset">Sunset</string>
+</resources>
