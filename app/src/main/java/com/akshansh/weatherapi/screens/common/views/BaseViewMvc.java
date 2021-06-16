@@ -18,6 +18,7 @@ public abstract class BaseViewMvc implements ViewMvc{
         return getContext().getString(stringId);
     }
 
+    @Override
     public View getRootView(){
         return rootView;
     }

@@ -24,4 +24,5 @@ public class ControllerModule {
     public Retrofit getRetrofit(){
         return activityModule.getRetrofit();
     }
+
 }

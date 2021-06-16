@@ -1,4 +1,4 @@
-package com.akshansh.weatherapi.networking;
+package com.akshansh.weatherapi.networking.weather;
 
 import com.akshansh.weatherapi.networking.weathermodels.CurrentWeatherData;
 
@@ -12,5 +12,4 @@ public interface OpenWeatherApi {
             @Query("q") String city,
             @Query("appid") String apiKey,
             @Query("units") String units);
-
 }
