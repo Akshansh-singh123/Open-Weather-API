@@ -11,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <androidx.constraintlayout.utils.widget.ImageFilterView
+            android:id="@+id/wallpaper"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
@@ -20,8 +21,10 @@
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="72dp"
+            android:layout_height="96dp"
             app:contentInsetStart="0dp"
+            app:contentInsetLeft="0dp"
+            android:gravity="center"
             app:layout_constraintTop_toTopOf="parent" />
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"

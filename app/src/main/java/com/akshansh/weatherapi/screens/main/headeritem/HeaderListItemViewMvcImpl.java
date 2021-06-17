@@ -53,6 +53,8 @@ public class HeaderListItemViewMvcImpl extends BaseViewMvc implements HeaderList
     }
 
     private void setWeatherDescription(String description) {
-        weatherDescriptionTextView.setText(description);
+        weatherDescriptionTextView.setText(String.format("%s%s",
+                description.substring(0, 1).toUpperCase(),
+                description.substring(1).toLowerCase()));
     }
 }

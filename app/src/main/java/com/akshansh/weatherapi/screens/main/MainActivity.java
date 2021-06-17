@@ -1,25 +1,24 @@
 package com.akshansh.weatherapi.screens.main;
 
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
 import android.os.Bundle;
 import android.util.Log;
 
-import com.akshansh.weatherapi.common.ViewMvcFactory;
-import com.akshansh.weatherapi.networking.weather.OpenWeatherApi;
-import com.akshansh.weatherapi.R;
+import com.akshansh.weatherapi.common.graphics.ImageLoaderHelper;
+import com.akshansh.weatherapi.common.graphics.PaletteHelper;
+import com.akshansh.weatherapi.common.graphics.WindowStatusBarHelper;
 import com.akshansh.weatherapi.networking.weathermodels.CurrentWeatherData;
 import com.akshansh.weatherapi.screens.common.BaseActivity;
 import com.akshansh.weatherapi.screens.common.toast.ToastHelper;
-import com.akshansh.weatherapi.screens.common.toolbar.ToolbarViewMvc;
 import com.akshansh.weatherapi.weather.FetchWeatherUseCase;
 
 public class MainActivity extends BaseActivity implements MainViewMvc.Listener,
-        FetchWeatherUseCase.Listener {
+        FetchWeatherUseCase.Listener, PaletteHelper.Listener {
     private MainViewMvc viewMvc;
     private FetchWeatherUseCase fetchWeatherUseCase;
     private ToastHelper toastHelper;
-    private static final String TAG = "MainActivity";
+    private ImageLoaderHelper imageLoaderHelper;
+    private PaletteHelper paletteHelper;
+    private WindowStatusBarHelper windowStatusBarHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +26,9 @@ public class MainActivity extends BaseActivity implements MainViewMvc.Listener,
         viewMvc = getInjector().getViewMvcFactory().getMainViewMvc(null);
         fetchWeatherUseCase = getInjector().getFetchWeatherUseCase();
         toastHelper = getInjector().getToastHelper();
+        imageLoaderHelper = getInjector().getImageLoaderHelper();
+        paletteHelper = getInjector().getPaletteHelper();
+        windowStatusBarHelper = getInjector().getWindowStatusBarHelper();
         setContentView(viewMvc.getRootView());
     }
 
@@ -35,6 +37,7 @@ public class MainActivity extends BaseActivity implements MainViewMvc.Listener,
         super.onStart();
         viewMvc.registerListener(this);
         fetchWeatherUseCase.registerListener(this);
+        paletteHelper.registerListener(this);
         fetchWeatherUseCase.fetchWeatherForecast("Jamshedpur","metric");
     }
 
@@ -44,6 +47,7 @@ public class MainActivity extends BaseActivity implements MainViewMvc.Listener,
         viewMvc.unregisterListener(this);
         fetchWeatherUseCase.unregisterListener(this);
         viewMvc.clearBinding();
+        paletteHelper.unregisterListener(this);
     }
 
     @Override
@@ -53,7 +57,9 @@ public class MainActivity extends BaseActivity implements MainViewMvc.Listener,
 
     @Override
     public void OnFetchWeatherSuccessful(CurrentWeatherData weatherData) {
-        Log.e(TAG, "OnFetchWeatherSuccessful: "+weatherData);
+        int resId = imageLoaderHelper.getBackgroundDrawableResource(weatherData);
+        paletteHelper.getPaletteColor(resId);
+        viewMvc.setBackgroundImage(resId);
         viewMvc.bindView(weatherData);
         viewMvc.stopRefreshing();
     }
@@ -68,5 +74,15 @@ public class MainActivity extends BaseActivity implements MainViewMvc.Listener,
     public void OnFetchWeatherNetworkError() {
         toastHelper.makeToast("Could not connect to the internet");
         viewMvc.stopRefreshing();
+    }
+
+    @Override
+    public void OnSwatchGenerated(int swatchColor) {
+        windowStatusBarHelper.setStatusBarColor(swatchColor);
+    }
+
+    @Override
+    public void OnSwatchGenerationFailed() {
+        toastHelper.makeToast("Could not generate palette colors");
     }
 }

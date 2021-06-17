@@ -86,7 +86,7 @@ public class WeatherDetailsViewMvcImpl extends BaseViewMvc implements WeatherDet
     }
 
     private void setWindSpeed(double speed) {
-        windSpeedTextView.setText(String.format(Locale.ENGLISH,"%.2f km/h",speed));
+        windSpeedTextView.setText(String.format(Locale.ENGLISH,"%.2f m/sec",speed));
     }
 
     private void setFeelsLikeTemperature(double temperature) {
