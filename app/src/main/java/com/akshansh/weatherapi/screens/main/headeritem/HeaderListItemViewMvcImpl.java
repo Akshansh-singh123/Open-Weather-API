@@ -11,6 +11,8 @@ import com.akshansh.weatherapi.databinding.WeatherHeaderItemBinding;
 import com.akshansh.weatherapi.networking.weathermodels.CurrentWeatherData;
 import com.akshansh.weatherapi.screens.common.views.BaseViewMvc;
 
+import java.util.Locale;
+
 public class HeaderListItemViewMvcImpl extends BaseViewMvc implements HeaderListItemViewMvc {
     private WeatherHeaderItemBinding binding;
     private final TextView temperatureTextView;
@@ -29,14 +31,17 @@ public class HeaderListItemViewMvcImpl extends BaseViewMvc implements HeaderList
 
     @Override
     public void bindView(CurrentWeatherData weatherData) {
-        setMainTemperature("24");
-        setTemperatureUnits();
-        setWeatherTitle("Rain");
-        setWeatherDescription("Rain, thunderstorm");
+        if (weatherData != null) {
+            setMainTemperature(weatherData.getForecast().getTemperature());
+            setTemperatureUnits();
+            setWeatherTitle(weatherData.getWeather().get(0).getWeatherTitle());
+            setWeatherDescription(weatherData.getWeather().get(0).getWeatherDescription());
+        }
     }
 
-    private void setMainTemperature(String temperature) {
-        temperatureTextView.setText(temperature);
+    private void setMainTemperature(double temperature) {
+        temperatureTextView.setText(String.format(Locale.ENGLISH,
+                "%d",Math.round(temperature)));
     }
 
     private void setTemperatureUnits() {

@@ -4,16 +4,16 @@ import com.google.gson.annotations.SerializedName;
 
 public class Clouds {
     @SerializedName("all")
-    private int altitude;
+    private int cloudPercentage;
 
-    public int getAltitude() {
-        return altitude;
+    public int getCloudPercentage() {
+        return cloudPercentage;
     }
 
     @Override
     public String toString() {
         return "Clouds{" +
-                "altitude=" + altitude +
+                "cloudPercentage=" + cloudPercentage +
                 '}';
     }
 }

@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.akshansh.weatherapi.common.ViewMvcFactory;
+import com.akshansh.weatherapi.screens.common.toast.ToastHelper;
 
 import retrofit2.Retrofit;
 
@@ -32,5 +33,9 @@ public class ActivityModule {
 
     public ViewMvcFactory getViewMvcFactory(){
         return new ViewMvcFactory(getLayoutInflater());
+    }
+
+    public ToastHelper getToastHelper(){
+        return new ToastHelper(activity);
     }
 }

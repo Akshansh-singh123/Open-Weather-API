@@ -19,7 +19,7 @@ public class MainViewMvcImpl extends BaseObservableViewMvc<MainViewMvc.Listener>
         implements MainViewMvc {
     private ActivityMainBinding binding;
     private Toolbar toolbar;
-    private SwipeRefreshLayout swipeRefreshLayout;
+    private final SwipeRefreshLayout swipeRefreshLayout;
     private RecyclerView recyclerView;
     private ToolbarViewMvc toolbarViewMvc;
     private final MainAdapter adapter;
@@ -43,10 +43,23 @@ public class MainViewMvcImpl extends BaseObservableViewMvc<MainViewMvc.Listener>
     @Override
     public void bindView(CurrentWeatherData weatherData) {
         adapter.bindView(weatherData);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                for(Listener listener: getListeners()){
+                    listener.OnRefresh();
+                }
+            }
+        });
     }
 
     @Override
     public void clearBinding() {
         binding = null;
+    }
+
+    @Override
+    public void stopRefreshing() {
+        swipeRefreshLayout.setRefreshing(false);
     }
 }

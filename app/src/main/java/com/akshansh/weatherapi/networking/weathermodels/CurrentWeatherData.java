@@ -18,11 +18,13 @@ public class CurrentWeatherData {
     @SerializedName("wind")
     private Wind wind;
     @SerializedName("rain")
-    private Rain rain;
+    private Precipitation precipitation;
+    @SerializedName("snow")
+    private Precipitation snow;
     @SerializedName("clouds")
     private Clouds clouds;
     @SerializedName("dt")
-    private long daytime;
+    private long weatherTimestamp;
     @SerializedName("sys")
     private WeatherSystem system;
     @SerializedName("timezone")
@@ -58,16 +60,16 @@ public class CurrentWeatherData {
         return wind;
     }
 
-    public Rain getRain() {
-        return rain;
+    public Precipitation getRain() {
+        return precipitation;
     }
 
     public Clouds getClouds() {
         return clouds;
     }
 
-    public long getDaytime() {
-        return daytime;
+    public long getWeatherTimestamp() {
+        return weatherTimestamp;
     }
 
     public WeatherSystem getSystem() {
@@ -99,9 +101,9 @@ public class CurrentWeatherData {
                 "\nforecast=" + forecast +
                 "\nvisibility=" + visibility +
                 "\nwind=" + wind +
-                "\nrain=" + rain +
+                "\nrain=" + precipitation +
                 "\nclouds=" + clouds +
-                "\ndaytime=" + daytime +
+                "\nweatherTimeStamp=" + weatherTimestamp +
                 "\nsystem=" + system +
                 "\ntimezone=" + timezone +
                 "\nid=" + id +

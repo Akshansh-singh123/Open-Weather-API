@@ -3,7 +3,11 @@ package com.akshansh.weatherapi.common.dependecyinjection;
 import com.akshansh.weatherapi.common.Constants;
 import com.akshansh.weatherapi.common.CustomApplication;
 import com.akshansh.weatherapi.common.ViewMvcFactory;
+import com.akshansh.weatherapi.networking.weather.FetchWeatherService;
+import com.akshansh.weatherapi.screens.common.toast.ToastHelper;
 import com.akshansh.weatherapi.screens.common.views.ViewMvc;
+import com.akshansh.weatherapi.weather.FetchWeatherEndpoint;
+import com.akshansh.weatherapi.weather.FetchWeatherUseCase;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -25,4 +29,15 @@ public class ControllerModule {
         return activityModule.getRetrofit();
     }
 
+    public ToastHelper getToastHelper(){
+        return activityModule.getToastHelper();
+    }
+
+    public FetchWeatherEndpoint getFetchWeatherService(){
+        return new FetchWeatherService(getRetrofit());
+    }
+
+    public FetchWeatherUseCase getFetchWeatherUseCase(){
+        return new FetchWeatherUseCase(getFetchWeatherService());
+    }
 }

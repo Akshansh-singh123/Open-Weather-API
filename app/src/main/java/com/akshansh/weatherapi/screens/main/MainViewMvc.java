@@ -11,4 +11,5 @@ public interface MainViewMvc extends ObservableViewMvc<MainViewMvc.Listener> {
     }
     void bindView(CurrentWeatherData weatherData);
     void clearBinding();
+    void stopRefreshing();
 }

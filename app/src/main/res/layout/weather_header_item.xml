@@ -5,12 +5,14 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     app:cardCornerRadius="16dp"
     android:layout_width="match_parent"
-    android:layout_height="256dp"
+    android:layout_height="400dp"
     app:cardBackgroundColor="@android:color/transparent"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="@+id/imageFilterView"
+    app:cardElevation="0dp"
     app:cardUseCompatPadding="true">
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -20,57 +22,66 @@
             android:id="@+id/frameLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:alpha="0.25"
+            android:alpha="0.15"
             android:background="@color/white" />
+
         <TextView
             android:id="@+id/main_temperature"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/white"
-            tools:text="24"
-            android:gravity="center"
             android:layout_margin="16dp"
-            android:textSize="84sp"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="128sp"
+            app:layout_constraintBottom_toTopOf="@+id/weather_title"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/frameLayout"
+            app:layout_constraintVertical_chainStyle="packed"
+            tools:text="24" />
+
         <TextView
             android:id="@+id/temperature_unit_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="\u00b0 C"
-            android:gravity="center"
-            android:textSize="20sp"
             android:layout_marginTop="16dp"
+            android:gravity="center"
             android:textColor="@color/white"
+            android:textSize="36sp"
             app:layout_constraintStart_toEndOf="@+id/main_temperature"
-            app:layout_constraintTop_toTopOf="@+id/main_temperature" />
+            app:layout_constraintTop_toTopOf="@+id/main_temperature"
+            tools:text="\u00b0 C" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/weather_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="Haze"
-            tools:drawableStart="@drawable/ic_waves"
             android:drawablePadding="16dp"
             android:gravity="center"
-            android:textSize="20sp"
             android:textColor="@color/white"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toTopOf="@+id/weather_description_text"
             app:layout_constraintEnd_toEndOf="@+id/main_temperature"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="@+id/main_temperature"
-            app:layout_constraintTop_toBottomOf="@+id/main_temperature" />
+            app:layout_constraintTop_toBottomOf="@+id/main_temperature"
+            tools:drawableStart="@drawable/ic_waves"
+            tools:text="Haze" />
 
         <TextView
             android:id="@+id/weather_description_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textColor="@color/white"
-            android:textSize="12sp"
-            android:gravity="center"
             android:layout_margin="16dp"
-            tools:text="Overcast clouds"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toTopOf="@+id/frameLayout"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/weather_title" />
+            app:layout_constraintTop_toBottomOf="@+id/weather_title"
+            tools:text="Overcast clouds" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>
