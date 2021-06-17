@@ -1,7 +1,6 @@
 package com.akshansh.weatherapi.screens.main;
 
 import android.os.Bundle;
-import android.util.Log;
 
 import com.akshansh.weatherapi.common.graphics.ImageLoaderHelper;
 import com.akshansh.weatherapi.common.graphics.PaletteHelper;

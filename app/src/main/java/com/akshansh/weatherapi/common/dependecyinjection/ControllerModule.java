@@ -1,5 +1,8 @@
 package com.akshansh.weatherapi.common.dependecyinjection;
 
+import com.akshansh.weatherapi.common.InternetConnectionTester;
+import com.akshansh.weatherapi.common.ScreensNavigator;
+import com.akshansh.weatherapi.common.WeatherDataSyncHelper;
 import com.akshansh.weatherapi.common.graphics.ImageLoaderHelper;
 import com.akshansh.weatherapi.common.ViewMvcFactory;
 import com.akshansh.weatherapi.common.graphics.PaletteHelper;
@@ -34,8 +37,20 @@ public class ControllerModule {
         return activityModule.getPaletteHelper();
     }
 
+    public WeatherDataSyncHelper getWeatherDataSyncHelper(){
+        return activityModule.getWeatherDataSyncHelper();
+    }
+
     public WindowStatusBarHelper getWindowStatusBarHelper(){
         return activityModule.getWindowStatusBarHelper();
+    }
+
+    public ScreensNavigator getScreensNavigator(){
+        return activityModule.getScreensNavigator();
+    }
+
+    public InternetConnectionTester getInternetConnectionTester(){
+        return activityModule.getInternetConnectionTester();
     }
 
     public ImageLoaderHelper getImageLoaderHelper(){
@@ -43,7 +58,8 @@ public class ControllerModule {
     }
 
     public FetchWeatherEndpoint getFetchWeatherService(){
-        return new FetchWeatherService(getRetrofit());
+        return new FetchWeatherService(getRetrofit(),getWeatherDataSyncHelper()
+                ,getInternetConnectionTester());
     }
 
     public FetchWeatherUseCase getFetchWeatherUseCase(){

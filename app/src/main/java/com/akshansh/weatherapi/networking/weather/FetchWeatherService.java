@@ -1,6 +1,8 @@
 package com.akshansh.weatherapi.networking.weather;
 
 import com.akshansh.weatherapi.common.Constants;
+import com.akshansh.weatherapi.common.InternetConnectionTester;
+import com.akshansh.weatherapi.common.WeatherDataSyncHelper;
 import com.akshansh.weatherapi.networking.NetworkException;
 import com.akshansh.weatherapi.networking.weathermodels.CurrentWeatherData;
 import com.akshansh.weatherapi.weather.FetchWeatherEndpoint;
@@ -12,14 +14,29 @@ import retrofit2.Retrofit;
 
 public class FetchWeatherService implements FetchWeatherEndpoint {
     private final Retrofit retrofit;
+    private final WeatherDataSyncHelper weatherDataSyncHelper;
+    private final InternetConnectionTester internetConnectionTester;
 
-    public FetchWeatherService(Retrofit retrofit) {
+
+    public FetchWeatherService(Retrofit retrofit, WeatherDataSyncHelper weatherDataSyncHelper,
+                               InternetConnectionTester internetConnectionTester) {
         this.retrofit = retrofit;
+        this.weatherDataSyncHelper = weatherDataSyncHelper;
+        this.internetConnectionTester = internetConnectionTester;
     }
 
     @Override
     public void fetchWeatherForecast(String city, String units, Callback callback)
             throws NetworkException {
+        CurrentWeatherData syncedWeatherData = weatherDataSyncHelper.getWeatherDataSynced();
+        if(syncedWeatherData != null){
+            callback.OnFetchWeatherSuccessful(syncedWeatherData);
+        }
+
+        if (!internetConnectionTester.isConnected()){
+            throw new NetworkException();
+        }
+
         OpenWeatherApi openWeatherApi = retrofit.create(OpenWeatherApi.class);
         Call<CurrentWeatherData> call = openWeatherApi.getWeather(city, Constants.API_KEY,units);
         call.enqueue(new retrofit2.Callback<CurrentWeatherData>() {
@@ -29,6 +46,7 @@ public class FetchWeatherService implements FetchWeatherEndpoint {
                     callback.OnFetchWeatherFailure();
                     return;
                 }
+                weatherDataSyncHelper.syncWeatherData(response.body());
                 callback.OnFetchWeatherSuccessful(response.body());
             }
 

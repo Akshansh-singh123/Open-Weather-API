@@ -12,7 +12,7 @@ public class CustomApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        applicationModule = new ApplicationModule();
+        applicationModule = new ApplicationModule(this);
     }
 
     public ApplicationModule getApplicationModule() {

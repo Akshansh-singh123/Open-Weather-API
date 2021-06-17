@@ -6,7 +6,10 @@ import android.view.LayoutInflater;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.akshansh.weatherapi.common.InternetConnectionTester;
+import com.akshansh.weatherapi.common.ScreensNavigator;
 import com.akshansh.weatherapi.common.ViewMvcFactory;
+import com.akshansh.weatherapi.common.WeatherDataSyncHelper;
 import com.akshansh.weatherapi.common.graphics.PaletteHelper;
 import com.akshansh.weatherapi.common.graphics.WindowStatusBarHelper;
 import com.akshansh.weatherapi.screens.common.toast.ToastHelper;
@@ -24,6 +27,10 @@ public class ActivityModule {
 
     public Retrofit getRetrofit(){
         return applicationModule.getRetrofit();
+    }
+
+    public WeatherDataSyncHelper getWeatherDataSyncHelper(){
+        return applicationModule.getWeatherDataSyncHelper();
     }
 
     public Context getContext(){
@@ -52,5 +59,13 @@ public class ActivityModule {
 
     public PaletteHelper getPaletteHelper(){
         return new PaletteHelper(getResources());
+    }
+
+    public ScreensNavigator getScreensNavigator(){
+        return new ScreensNavigator(activity);
+    }
+
+    public InternetConnectionTester getInternetConnectionTester(){
+        return new InternetConnectionTester(activity);
     }
 }
