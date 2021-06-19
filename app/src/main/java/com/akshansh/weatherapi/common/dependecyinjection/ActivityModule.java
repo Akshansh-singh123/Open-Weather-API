@@ -6,10 +6,10 @@ import android.view.LayoutInflater;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.akshansh.weatherapi.common.InternetConnectionTester;
-import com.akshansh.weatherapi.common.ScreensNavigator;
+import com.akshansh.weatherapi.common.utils.InternetConnectionTester;
+import com.akshansh.weatherapi.screens.common.screensnavigator.ScreensNavigator;
 import com.akshansh.weatherapi.common.ViewMvcFactory;
-import com.akshansh.weatherapi.common.WeatherDataSyncHelper;
+import com.akshansh.weatherapi.common.utils.WeatherDataSyncHelper;
 import com.akshansh.weatherapi.common.graphics.PaletteHelper;
 import com.akshansh.weatherapi.common.graphics.WindowStatusBarHelper;
 import com.akshansh.weatherapi.screens.common.toast.ToastHelper;

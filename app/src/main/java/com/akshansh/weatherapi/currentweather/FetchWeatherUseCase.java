@@ -1,4 +1,4 @@
-package com.akshansh.weatherapi.weather;
+package com.akshansh.weatherapi.currentweather;
 
 import com.akshansh.weatherapi.common.BaseObservable;
 import com.akshansh.weatherapi.networking.NetworkException;

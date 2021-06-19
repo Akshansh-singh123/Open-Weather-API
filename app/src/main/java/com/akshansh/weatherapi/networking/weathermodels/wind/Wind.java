@@ -1,4 +1,4 @@
-package com.akshansh.weatherapi.networking.weathermodels;
+package com.akshansh.weatherapi.networking.weathermodels.wind;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -7,6 +7,7 @@ public class Wind {
     private double windSpeed;
     @SerializedName("deg")
     private double windDegrees;
+    private double gust;
 
     public double getWindSpeed() {
         return windSpeed;
@@ -14,6 +15,10 @@ public class Wind {
 
     public double getWindDegrees() {
         return windDegrees;
+    }
+
+    public double getGust() {
+        return gust;
     }
 
     @Override

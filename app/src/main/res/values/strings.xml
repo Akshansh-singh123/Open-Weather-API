@@ -11,4 +11,9 @@
     <string name="pressure">Pressure</string>
     <string name="sunset">Sunset</string>
     <string name="legacy_icon">Legacy icon</string>
+    <string name="precipitation">Precipitation</string>
+    <string name="rain">Rain</string>
+    <string name="snow">Snow</string>
+    <string name="weather_icon">weather icon</string>
+    <string name="_5_day_forecast">5 Day Forecast</string>
 </resources>

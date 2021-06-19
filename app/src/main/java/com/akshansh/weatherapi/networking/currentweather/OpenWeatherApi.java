@@ -1,4 +1,4 @@
-package com.akshansh.weatherapi.networking.weather;
+package com.akshansh.weatherapi.networking.currentweather;
 
 import com.akshansh.weatherapi.networking.weathermodels.CurrentWeatherData;
 

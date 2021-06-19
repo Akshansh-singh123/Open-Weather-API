@@ -16,4 +16,5 @@
     <color name="secondaryDarkColor">#102027</color>
     <color name="primaryTextColor">#ffffff</color>
     <color name="secondaryTextColor">#ffffff</color>
+    <color name="selected_background_black">#40000000</color>
 </resources>

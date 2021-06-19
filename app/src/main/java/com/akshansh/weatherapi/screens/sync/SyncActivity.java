@@ -1,18 +1,14 @@
 package com.akshansh.weatherapi.screens.sync;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.util.Log;
 
-import com.akshansh.weatherapi.common.ScreensNavigator;
-import com.akshansh.weatherapi.common.WeatherDataSyncHelper;
+import com.akshansh.weatherapi.screens.common.screensnavigator.ScreensNavigator;
+import com.akshansh.weatherapi.common.utils.WeatherDataSyncHelper;
 import com.akshansh.weatherapi.databinding.ActivitySyncBinding;
 import com.akshansh.weatherapi.networking.weathermodels.CurrentWeatherData;
 import com.akshansh.weatherapi.screens.common.BaseActivity;
 import com.akshansh.weatherapi.screens.common.toast.ToastHelper;
-import com.akshansh.weatherapi.screens.main.MainActivity;
-import com.akshansh.weatherapi.weather.FetchWeatherUseCase;
+import com.akshansh.weatherapi.currentweather.FetchWeatherUseCase;
 
 public class SyncActivity extends BaseActivity implements FetchWeatherUseCase.Listener {
     private ActivitySyncBinding binding;

@@ -1,14 +1,13 @@
-package com.akshansh.weatherapi.networking.weather;
+package com.akshansh.weatherapi.networking.currentweather;
 
 import com.akshansh.weatherapi.common.Constants;
-import com.akshansh.weatherapi.common.InternetConnectionTester;
-import com.akshansh.weatherapi.common.WeatherDataSyncHelper;
+import com.akshansh.weatherapi.common.utils.InternetConnectionTester;
+import com.akshansh.weatherapi.common.utils.WeatherDataSyncHelper;
 import com.akshansh.weatherapi.networking.NetworkException;
 import com.akshansh.weatherapi.networking.weathermodels.CurrentWeatherData;
-import com.akshansh.weatherapi.weather.FetchWeatherEndpoint;
+import com.akshansh.weatherapi.currentweather.FetchWeatherEndpoint;
 
 import retrofit2.Call;
-import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 

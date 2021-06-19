@@ -1,7 +1,7 @@
 package com.akshansh.weatherapi.common.dependecyinjection;
 
 import com.akshansh.weatherapi.common.CustomApplication;
-import com.akshansh.weatherapi.common.WeatherDataSyncHelper;
+import com.akshansh.weatherapi.common.utils.WeatherDataSyncHelper;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;

@@ -1,4 +1,4 @@
-package com.akshansh.weatherapi.networking.weathermodels;
+package com.akshansh.weatherapi.networking.weathermodels.weather;
 
 import com.google.gson.annotations.SerializedName;
 

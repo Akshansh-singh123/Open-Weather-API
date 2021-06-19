@@ -1,5 +1,6 @@
 package com.akshansh.weatherapi.screens.main;
 
+import android.graphics.Color;
 import android.os.Bundle;
 
 import com.akshansh.weatherapi.common.graphics.ImageLoaderHelper;
@@ -8,7 +9,7 @@ import com.akshansh.weatherapi.common.graphics.WindowStatusBarHelper;
 import com.akshansh.weatherapi.networking.weathermodels.CurrentWeatherData;
 import com.akshansh.weatherapi.screens.common.BaseActivity;
 import com.akshansh.weatherapi.screens.common.toast.ToastHelper;
-import com.akshansh.weatherapi.weather.FetchWeatherUseCase;
+import com.akshansh.weatherapi.currentweather.FetchWeatherUseCase;
 
 public class MainActivity extends BaseActivity implements MainViewMvc.Listener,
         FetchWeatherUseCase.Listener, PaletteHelper.Listener {
@@ -23,12 +24,12 @@ public class MainActivity extends BaseActivity implements MainViewMvc.Listener,
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         viewMvc = getInjector().getViewMvcFactory().getMainViewMvc(null);
+        setContentView(viewMvc.getRootView());
         fetchWeatherUseCase = getInjector().getFetchWeatherUseCase();
         toastHelper = getInjector().getToastHelper();
         imageLoaderHelper = getInjector().getImageLoaderHelper();
         paletteHelper = getInjector().getPaletteHelper();
         windowStatusBarHelper = getInjector().getWindowStatusBarHelper();
-        setContentView(viewMvc.getRootView());
     }
 
     @Override
@@ -82,6 +83,6 @@ public class MainActivity extends BaseActivity implements MainViewMvc.Listener,
 
     @Override
     public void OnSwatchGenerationFailed() {
-        toastHelper.makeToast("Could not generate palette colors");
+        windowStatusBarHelper.setStatusBarColor(Color.argb(200,0,0,0));
     }
 }

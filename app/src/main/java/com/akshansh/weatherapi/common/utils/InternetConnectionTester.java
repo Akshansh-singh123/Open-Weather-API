@@ -1,4 +1,4 @@
-package com.akshansh.weatherapi.common;
+package com.akshansh.weatherapi.common.utils;
 
 import android.content.Context;
 import android.net.ConnectivityManager;

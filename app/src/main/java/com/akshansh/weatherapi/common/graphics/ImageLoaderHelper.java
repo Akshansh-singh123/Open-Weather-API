@@ -3,7 +3,7 @@ package com.akshansh.weatherapi.common.graphics;
 
 import com.akshansh.weatherapi.common.Constants;
 import com.akshansh.weatherapi.networking.weathermodels.CurrentWeatherData;
-import com.akshansh.weatherapi.networking.weathermodels.Weather;
+import com.akshansh.weatherapi.networking.weathermodels.weather.Weather;
 
 public class ImageLoaderHelper {
     public int getBackgroundDrawableResource(CurrentWeatherData weatherData){

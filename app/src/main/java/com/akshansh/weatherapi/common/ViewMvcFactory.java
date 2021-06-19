@@ -9,11 +9,13 @@ import com.akshansh.weatherapi.screens.main.MainViewMvc;
 import com.akshansh.weatherapi.screens.main.MainViewMvcImpl;
 import com.akshansh.weatherapi.screens.main.headeritem.HeaderListItemViewMvc;
 import com.akshansh.weatherapi.screens.main.headeritem.HeaderListItemViewMvcImpl;
+import com.akshansh.weatherapi.screens.main.precipitationitem.PrecipitationListItemViewMvc;
+import com.akshansh.weatherapi.screens.main.precipitationitem.PrecipitationListItemViewMvcImpl;
 import com.akshansh.weatherapi.screens.main.weatherdetailsitem.WeatherDetailsItemViewMvc;
 import com.akshansh.weatherapi.screens.main.weatherdetailsitem.WeatherDetailsViewMvcImpl;
 
 public class ViewMvcFactory {
-    private LayoutInflater inflater;
+    private final LayoutInflater inflater;
 
     public ViewMvcFactory(LayoutInflater inflater) {
         this.inflater = inflater;
@@ -33,5 +35,9 @@ public class ViewMvcFactory {
 
     public ToolbarViewMvc getToolbarViewMvc(ViewGroup parent){
         return new ToolbarViewMvcImpl(inflater,parent);
+    }
+
+    public PrecipitationListItemViewMvc getPrecipitationListItemViewMvc(ViewGroup parent){
+        return new PrecipitationListItemViewMvcImpl(inflater,parent);
     }
 }

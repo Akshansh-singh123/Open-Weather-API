@@ -1,4 +1,4 @@
-package com.akshansh.weatherapi.common;
+package com.akshansh.weatherapi.screens.common.screensnavigator;
 
 import android.content.Intent;
 import android.os.Handler;
@@ -6,7 +6,6 @@ import android.os.Handler;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.akshansh.weatherapi.screens.main.MainActivity;
-import com.akshansh.weatherapi.screens.sync.SyncActivity;
 
 public class ScreensNavigator {
     private final AppCompatActivity activity;

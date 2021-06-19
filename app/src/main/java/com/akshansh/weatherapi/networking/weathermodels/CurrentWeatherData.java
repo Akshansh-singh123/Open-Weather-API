@@ -1,5 +1,12 @@
 package com.akshansh.weatherapi.networking.weathermodels;
 
+import com.akshansh.weatherapi.networking.weathermodels.clouds.Clouds;
+import com.akshansh.weatherapi.networking.weathermodels.coordinates.Coordinates;
+import com.akshansh.weatherapi.networking.weathermodels.mainforecast.MainForecast;
+import com.akshansh.weatherapi.networking.weathermodels.precipitation.Precipitation;
+import com.akshansh.weatherapi.networking.weathermodels.system.WeatherSystem;
+import com.akshansh.weatherapi.networking.weathermodels.weather.Weather;
+import com.akshansh.weatherapi.networking.weathermodels.wind.Wind;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
@@ -18,7 +25,7 @@ public class CurrentWeatherData {
     @SerializedName("wind")
     private Wind wind;
     @SerializedName("rain")
-    private Precipitation precipitation;
+    private Precipitation rain;
     @SerializedName("snow")
     private Precipitation snow;
     @SerializedName("clouds")
@@ -61,7 +68,11 @@ public class CurrentWeatherData {
     }
 
     public Precipitation getRain() {
-        return precipitation;
+        return rain;
+    }
+
+    public Precipitation getSnow() {
+        return snow;
     }
 
     public Clouds getClouds() {
@@ -101,7 +112,7 @@ public class CurrentWeatherData {
                 "\nforecast=" + forecast +
                 "\nvisibility=" + visibility +
                 "\nwind=" + wind +
-                "\nrain=" + precipitation +
+                "\nrain=" + rain +
                 "\nclouds=" + clouds +
                 "\nweatherTimeStamp=" + weatherTimestamp +
                 "\nsystem=" + system +

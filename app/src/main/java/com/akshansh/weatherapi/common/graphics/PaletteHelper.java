@@ -10,6 +10,8 @@ import androidx.palette.graphics.Palette;
 
 import com.akshansh.weatherapi.common.BaseObservable;
 
+import java.util.ArrayList;
+
 public class PaletteHelper extends BaseObservable<PaletteHelper.Listener> {
     public interface Listener{
         void OnSwatchGenerated(int swatchColor);
@@ -28,23 +30,23 @@ public class PaletteHelper extends BaseObservable<PaletteHelper.Listener> {
         Palette.from(bitmap).generate(new Palette.PaletteAsyncListener() {
             @Override
             public void onGenerated(@Nullable Palette palette) {
-                Palette.Swatch lightMutedSwatch;
-                Palette.Swatch mutedSwatch;
-                Palette.Swatch darkMutedSwatch;
                 if (palette != null) {
-                    lightMutedSwatch = palette.getLightMutedSwatch();
-                    mutedSwatch = palette.getMutedSwatch();
-                    darkMutedSwatch = palette.getDarkMutedSwatch();
-                    if(darkMutedSwatch != null){
-                        notifyColor(darkMutedSwatch.getRgb());
-                    }else if(mutedSwatch != null){
-                        notifyColor(mutedSwatch.getRgb());
-                    }else if(lightMutedSwatch != null){
-                        notifyColor(lightMutedSwatch.getRgb());
-                    }else {
-                        for(Listener listener: getListeners()){
-                            listener.OnSwatchGenerationFailed();
+                    ArrayList<Palette.Swatch> swatches = new ArrayList<>();
+                    swatches.add(palette.getDarkVibrantSwatch());
+                    swatches.add(palette.getDarkMutedSwatch());
+                    swatches.add(palette.getMutedSwatch());
+                    swatches.add(palette.getVibrantSwatch());
+                    swatches.add(palette.getLightMutedSwatch());
+                    swatches.add(palette.getLightVibrantSwatch());
+                    for (Palette.Swatch swatch : swatches) {
+                        if (swatch != null) {
+                            notifyColor(swatch.getRgb());
+                            return;
                         }
+                    }
+
+                    for(Listener listener: getListeners()){
+                        listener.OnSwatchGenerationFailed();
                     }
                 }else{
                     Log.e(TAG, "onGenerated: palette null");
