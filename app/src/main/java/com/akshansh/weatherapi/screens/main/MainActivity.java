@@ -10,7 +10,7 @@ import com.akshansh.weatherapi.networking.weathermodels.CurrentWeatherData;
 import com.akshansh.weatherapi.networking.weathermodels.WeatherForecastData;
 import com.akshansh.weatherapi.screens.common.BaseActivity;
 import com.akshansh.weatherapi.screens.common.toast.ToastHelper;
-import com.akshansh.weatherapi.currentweather.FetchWeatherUseCase;
+import com.akshansh.weatherapi.weather.FetchWeatherUseCase;
 
 public class MainActivity extends BaseActivity implements MainViewMvc.Listener,
         FetchWeatherUseCase.Listener, PaletteHelper.Listener {

@@ -1,5 +1,6 @@
 package com.akshansh.weatherapi.screens.main.forecastitem;
 
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -129,19 +130,23 @@ public class ForecastListItemViewMvcImpl extends BaseViewMvc implements Forecast
         windSpeedTextView.setText(windSpeed);
     }
 
-    @UiThread
     private void hashForecastDataByDate(List<ForecastData> forecastData) {
-        forecastDataByDates.clear();
-        for (ForecastData data : forecastData) {
-            String day = keyFormat.format(new Date(data.getWeatherTimestamp()*1000L));
-            if (!forecastDataByDates.containsKey(day)) {
-                forecastDataByDates.put(day, new ArrayList<>());
+        new Handler().post(new Runnable() {
+            @Override
+            public void run() {
+                forecastDataByDates.clear();
+                for (ForecastData data : forecastData) {
+                    String day = keyFormat.format(new Date(data.getWeatherTimestamp()*1000L));
+                    if (!forecastDataByDates.containsKey(day)) {
+                        forecastDataByDates.put(day, new ArrayList<>());
+                    }
+                    forecastDataByDates.get(day).add(data);
+                }
+                filterMap();
+                adapter.bindTreeMap(forecastDataByDates);
+                OnDaySelected(forecastDataByDates.firstKey());
             }
-            forecastDataByDates.get(day).add(data);
-        }
-        filterMap();
-        adapter.bindTreeMap(forecastDataByDates);
-        OnDaySelected(forecastDataByDates.firstKey());
+        });
     }
 
     private void filterMap() {

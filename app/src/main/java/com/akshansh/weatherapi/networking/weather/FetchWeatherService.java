@@ -5,7 +5,7 @@ import com.akshansh.weatherapi.common.utils.InternetConnectionTester;
 import com.akshansh.weatherapi.common.utils.WeatherDataSyncHelper;
 import com.akshansh.weatherapi.networking.NetworkException;
 import com.akshansh.weatherapi.networking.weathermodels.CurrentWeatherData;
-import com.akshansh.weatherapi.currentweather.FetchWeatherEndpoint;
+import com.akshansh.weatherapi.weather.FetchWeatherEndpoint;
 import com.akshansh.weatherapi.networking.weathermodels.WeatherForecastData;
 
 import retrofit2.Call;

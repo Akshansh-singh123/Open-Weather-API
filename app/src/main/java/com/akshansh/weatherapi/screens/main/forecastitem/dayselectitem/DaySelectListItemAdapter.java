@@ -28,6 +28,7 @@ public class DaySelectListItemAdapter extends RecyclerView.Adapter<DaySelectItem
     public DaySelectListItemAdapter(ViewMvcFactory viewMvcFactory,Listener listener) {
         this.viewMvcFactory = viewMvcFactory;
         this.listener = listener;
+        forecastDataTreeMap = new TreeMap<>();
         selectedItemIndex =  0;
     }
 

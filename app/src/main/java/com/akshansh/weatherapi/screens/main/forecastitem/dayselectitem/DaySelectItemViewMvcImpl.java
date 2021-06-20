@@ -1,5 +1,6 @@
 package com.akshansh.weatherapi.screens.main.forecastitem.dayselectitem;
 
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -46,7 +47,7 @@ public class DaySelectItemViewMvcImpl extends BaseObservableViewMvc<DaySelectLis
     @Override
     public void bindView(List<ForecastData> forecastData) {
         this.forecastData = new ArrayList<>(forecastData);
-        setMinMaxTemperatureView();
+        calculateMinMaxTemperature();
         bindWeatherIcon(forecastData.get(0).getWeather());
         bindDay(forecastData.get(0).getWeatherTimestamp());
         container.setOnClickListener(new View.OnClickListener() {
@@ -85,19 +86,26 @@ public class DaySelectItemViewMvcImpl extends BaseObservableViewMvc<DaySelectLis
         weatherIcon.setImageResource(IconLoaderHelper.getWeatherIcon(iconCode));
     }
 
-    @UiThread
-    private void setMinMaxTemperatureView() {
-        double minTemperature = forecastData.get(0).getMainForecast().getMinTemperature();
-        double maxTemperature = forecastData.get(0).getMainForecast().getMaxTemperature();
-        for (ForecastData data : forecastData) {
-            if(data.getMainForecast().getMaxTemperature() > maxTemperature){
-                maxTemperature = data.getMainForecast().getMaxTemperature();
+    private void calculateMinMaxTemperature(){
+        new Handler().post(new Runnable() {
+            @Override
+            public void run() {
+                double minTemperature = forecastData.get(0).getMainForecast().getMinTemperature();
+                double maxTemperature = forecastData.get(0).getMainForecast().getMaxTemperature();
+                for (ForecastData data : forecastData) {
+                    if(data.getMainForecast().getMaxTemperature() > maxTemperature){
+                        maxTemperature = data.getMainForecast().getMaxTemperature();
+                    }
+                    if(data.getMainForecast().getMinTemperature() < minTemperature){
+                        minTemperature = data.getMainForecast().getMinTemperature();
+                    }
+                }
+                setMinMaxTemperatureView(minTemperature,maxTemperature);
             }
-            if(data.getMainForecast().getMinTemperature() < minTemperature){
-                minTemperature = data.getMainForecast().getMinTemperature();
-            }
-        }
+        });
+    }
 
+    private void setMinMaxTemperatureView(double minTemperature,double maxTemperature) {
         minTemperatureTextView.setText(String.format(Locale.ENGLISH,
                 "%d%sC",Math.round(minTemperature),getString(R.string.degrees_symbol)));
         maxTemperatureTextView.setText(String.format(Locale.ENGLISH,

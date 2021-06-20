@@ -40,6 +40,8 @@ public class PrecipitationListItemViewMvcImpl extends BaseViewMvc implements Pre
             oneHourRainTextView.setText(String.format(Locale.ENGLISH,"Last 1 hour: %s mm",0));
             threeHourRainTextView.setText(String.format(Locale.ENGLISH,"Last 3 hour: %s mm",0));
         }
+        oneHourRainTextView.setSelected(true);
+        threeHourRainTextView.setSelected(true);
     }
 
     @Override
@@ -53,5 +55,7 @@ public class PrecipitationListItemViewMvcImpl extends BaseViewMvc implements Pre
             oneHourSnowTextView.setText(String.format(Locale.ENGLISH,"Last 1 hour: %s mm",0));
             threeHourSnowTextView.setText(String.format(Locale.ENGLISH,"Last 3 hour: %s mm",0));
         }
+        oneHourSnowTextView.setSelected(true);
+        threeHourSnowTextView.setSelected(true);
     }
 }

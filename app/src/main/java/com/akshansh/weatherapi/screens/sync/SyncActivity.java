@@ -9,7 +9,7 @@ import com.akshansh.weatherapi.databinding.ActivitySyncBinding;
 import com.akshansh.weatherapi.networking.weathermodels.CurrentWeatherData;
 import com.akshansh.weatherapi.screens.common.BaseActivity;
 import com.akshansh.weatherapi.screens.common.toast.ToastHelper;
-import com.akshansh.weatherapi.currentweather.FetchWeatherUseCase;
+import com.akshansh.weatherapi.weather.FetchWeatherUseCase;
 
 public class SyncActivity extends BaseActivity implements FetchWeatherUseCase.Listener {
     private ActivitySyncBinding binding;
