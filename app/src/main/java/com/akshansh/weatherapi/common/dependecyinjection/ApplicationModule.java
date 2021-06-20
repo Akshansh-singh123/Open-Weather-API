@@ -11,20 +11,31 @@ import static com.akshansh.weatherapi.common.Constants.ENDPOINT;
 public class ApplicationModule {
     private final CustomApplication application;
     private WeatherDataSyncHelper weatherDataSyncHelper;
-    private Retrofit retrofit;
+    private Retrofit currentWeatherRetrofit;
+    private Retrofit weatherForecastRetrofit;
 
     public ApplicationModule(CustomApplication application) {
         this.application = application;
     }
 
-    public Retrofit getRetrofit() {
-        if(retrofit == null){
-            retrofit = new Retrofit.Builder()
+    public Retrofit getCurrentWeatherRetrofit() {
+        if(currentWeatherRetrofit == null){
+            currentWeatherRetrofit = new Retrofit.Builder()
                     .baseUrl(ENDPOINT)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
         }
-        return retrofit;
+        return currentWeatherRetrofit;
+    }
+
+    public Retrofit getWeatherForecastRetrofit() {
+        if(weatherForecastRetrofit == null){
+            weatherForecastRetrofit = new Retrofit.Builder()
+                    .baseUrl(ENDPOINT)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+        }
+        return weatherForecastRetrofit;
     }
 
     public WeatherDataSyncHelper getWeatherDataSyncHelper() {

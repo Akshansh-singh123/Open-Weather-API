@@ -18,6 +18,10 @@ public abstract class BaseViewMvc implements ViewMvc{
         return getContext().getString(stringId);
     }
 
+    protected int getColor(int resId){
+        return getContext().getColor(resId);
+    }
+
     @Override
     public View getRootView(){
         return rootView;

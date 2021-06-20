@@ -17,9 +17,7 @@ public class PaletteHelper extends BaseObservable<PaletteHelper.Listener> {
         void OnSwatchGenerated(int swatchColor);
         void OnSwatchGenerationFailed();
     }
-
     private final Resources resources;
-    private static final String TAG = "PaletteHelper";
 
     public PaletteHelper(Resources resources) {
         this.resources = resources;
@@ -44,18 +42,16 @@ public class PaletteHelper extends BaseObservable<PaletteHelper.Listener> {
                             return;
                         }
                     }
-
-                    for(Listener listener: getListeners()){
-                        listener.OnSwatchGenerationFailed();
-                    }
-                }else{
-                    Log.e(TAG, "onGenerated: palette null");
-                    for(Listener listener: getListeners()){
-                        listener.OnSwatchGenerationFailed();
-                    }
                 }
+                notifyFailure();
             }
         });
+    }
+
+    private void notifyFailure() {
+        for (Listener listener : getListeners()) {
+            listener.OnSwatchGenerationFailed();
+        }
     }
 
     private void notifyColor(int color){

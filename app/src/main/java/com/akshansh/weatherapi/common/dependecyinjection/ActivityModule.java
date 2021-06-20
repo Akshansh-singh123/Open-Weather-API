@@ -25,8 +25,12 @@ public class ActivityModule {
         this.activity = activity;
     }
 
-    public Retrofit getRetrofit(){
-        return applicationModule.getRetrofit();
+    public Retrofit getCurrentWeatherRetrofit(){
+        return applicationModule.getCurrentWeatherRetrofit();
+    }
+
+    public Retrofit getWeatherForecastRetrofit(){
+        return applicationModule.getWeatherForecastRetrofit();
     }
 
     public WeatherDataSyncHelper getWeatherDataSyncHelper(){

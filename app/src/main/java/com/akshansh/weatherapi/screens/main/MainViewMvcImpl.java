@@ -14,6 +14,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.akshansh.weatherapi.common.ViewMvcFactory;
 import com.akshansh.weatherapi.databinding.ActivityMainBinding;
 import com.akshansh.weatherapi.networking.weathermodels.CurrentWeatherData;
+import com.akshansh.weatherapi.networking.weathermodels.WeatherForecastData;
 import com.akshansh.weatherapi.screens.common.toolbar.ToolbarViewMvc;
 import com.akshansh.weatherapi.screens.common.views.BaseObservableViewMvc;
 
@@ -40,14 +41,14 @@ public class MainViewMvcImpl extends BaseObservableViewMvc<MainViewMvc.Listener>
         adapter = new MainAdapter(viewMvcFactory);
         toolbar.addView(toolbarViewMvc.getRootView(),ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.MATCH_PARENT);
-        toolbarViewMvc.setTitle("Jamshedpur");
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
     }
 
     @Override
-    public void bindView(CurrentWeatherData weatherData) {
-        adapter.bindView(weatherData);
+    public void bindView(CurrentWeatherData weatherData, WeatherForecastData weatherForecastData) {
+        adapter.bindView(weatherData,weatherForecastData);
+        toolbarViewMvc.setTitle("Jamshedpur");
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {

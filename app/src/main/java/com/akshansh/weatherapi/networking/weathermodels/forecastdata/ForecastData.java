@@ -63,16 +63,6 @@ public class ForecastData {
 
     @Override
     public String toString() {
-        return "ForecastData{" +
-                "weatherTimestamp=" + weatherTimestamp +
-                ", mainForecast=" + mainForecast +
-                ", weather=" + weather +
-                ", clouds=" + clouds +
-                ", wind=" + wind +
-                ", visibility=" + visibility +
-                ", probabilityOfPrecipitation=" + probabilityOfPrecipitation +
-                ", system=" + system +
-                ", dateTime='" + dateTime + '\'' +
-                '}';
+        return "dateTime " + dateTime+"\n";
     }
 }

@@ -3,10 +3,12 @@ package com.akshansh.weatherapi.currentweather;
 import com.akshansh.weatherapi.common.BaseObservable;
 import com.akshansh.weatherapi.networking.NetworkException;
 import com.akshansh.weatherapi.networking.weathermodels.CurrentWeatherData;
+import com.akshansh.weatherapi.networking.weathermodels.WeatherForecastData;
 
 public class FetchWeatherUseCase extends BaseObservable<FetchWeatherUseCase.Listener> {
     public interface Listener{
-        void OnFetchWeatherSuccessful(CurrentWeatherData weatherData);
+        void OnFetchWeatherSuccessful(CurrentWeatherData weatherData,
+                                      WeatherForecastData weatherForecastData);
         void OnFetchWeatherFailure();
         void OnFetchWeatherNetworkError();
     }
@@ -21,9 +23,10 @@ public class FetchWeatherUseCase extends BaseObservable<FetchWeatherUseCase.List
         try {
             fetchWeatherEndpoint.fetchWeatherForecast(city,units,new FetchWeatherEndpoint.Callback() {
                 @Override
-                public void OnFetchWeatherSuccessful(CurrentWeatherData currentWeatherData) {
+                public void OnFetchWeatherSuccessful(CurrentWeatherData currentWeatherData,
+                                                     WeatherForecastData weatherForecastData) {
                     for(Listener listener: getListeners()){
-                        listener.OnFetchWeatherSuccessful(currentWeatherData);
+                        listener.OnFetchWeatherSuccessful(currentWeatherData,weatherForecastData);
                     }
                 }
 

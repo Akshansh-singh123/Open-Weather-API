@@ -5,7 +5,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     app:cardCornerRadius="16dp"
     android:layout_width="match_parent"
-    android:layout_height="400dp"
+    android:layout_height="440dp"
     app:cardBackgroundColor="@android:color/transparent"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
@@ -53,21 +53,13 @@
             app:layout_constraintStart_toStartOf="@+id/vertical_guideline"
             app:layout_constraintTop_toTopOf="@+id/main_temperature">
             <TextView
-                android:id="@+id/day_rain_text"
+                android:id="@+id/day_precipitation_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="end"
                 android:textColor="@color/white"
                 android:textSize="12sp"
-                tools:text="Rain: 7.5 mm" />
-            <TextView
-                android:id="@+id/day_humidity_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="end"
-                android:textColor="@color/white"
-                android:textSize="12sp"
-                tools:text="Humidity: 75%" />
+                tools:text="Precipitation Chance: 7.5%" />
             <TextView
                 android:id="@+id/day_wind_speed"
                 android:layout_width="match_parent"
@@ -76,6 +68,14 @@
                 android:textColor="@color/white"
                 android:textSize="12sp"
                 tools:text="Wind speed: 21 km/h" />
+            <TextView
+                android:id="@+id/day_humidity_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                tools:text="Humidity: 75%" />
         </LinearLayout>
         <TextView
             android:id="@+id/weather_description_text"
@@ -125,26 +125,28 @@
             app:layout_constraintStart_toEndOf="@+id/main_temperature"
             app:layout_constraintTop_toTopOf="@+id/main_temperature" />
         <com.google.android.material.slider.Slider
-            android:id="@+id/hourly_seek_bar"
+            android:id="@+id/hourly_slider"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             app:thumbColor="@color/white"
             app:trackColor="@color/white"
             app:tickColorInactive="@color/secondaryDarkColor"
-            android:stepSize="3"
-            android:valueFrom="0"
-            android:valueTo="24"
+            tools:stepSize="3"
+            tools:valueFrom="0"
+            tools:valueTo="21"
             android:layout_marginHorizontal="16dp"
             app:layout_constraintTop_toBottomOf="@id/main_temperature"/>
+
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
             android:layout_width="0dp"
-            android:layout_height="128dp"
+            android:layout_height="160dp"
             android:layout_marginTop="8dp"
+            android:orientation="horizontal"
             android:overScrollMode="never"
-            app:layout_constraintStart_toStartOf="@id/hourly_seek_bar"
-            app:layout_constraintEnd_toEndOf="@id/hourly_seek_bar"
-            app:layout_constraintTop_toBottomOf="@id/hourly_seek_bar"
-            android:orientation="horizontal"/>
+            app:layout_constraintEnd_toEndOf="@id/hourly_slider"
+            app:layout_constraintStart_toStartOf="@id/hourly_slider"
+            app:layout_constraintTop_toBottomOf="@id/hourly_slider" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

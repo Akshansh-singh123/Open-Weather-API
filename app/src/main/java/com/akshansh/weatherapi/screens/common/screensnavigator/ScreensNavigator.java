@@ -21,6 +21,6 @@ public class ScreensNavigator {
                 activity.startActivity(new Intent(activity, MainActivity.class));
                 activity.finish();
             }
-        },300);
+        },500);
     }
 }

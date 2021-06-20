@@ -7,6 +7,7 @@ import com.akshansh.weatherapi.common.graphics.ImageLoaderHelper;
 import com.akshansh.weatherapi.common.graphics.PaletteHelper;
 import com.akshansh.weatherapi.common.graphics.WindowStatusBarHelper;
 import com.akshansh.weatherapi.networking.weathermodels.CurrentWeatherData;
+import com.akshansh.weatherapi.networking.weathermodels.WeatherForecastData;
 import com.akshansh.weatherapi.screens.common.BaseActivity;
 import com.akshansh.weatherapi.screens.common.toast.ToastHelper;
 import com.akshansh.weatherapi.currentweather.FetchWeatherUseCase;
@@ -56,11 +57,12 @@ public class MainActivity extends BaseActivity implements MainViewMvc.Listener,
     }
 
     @Override
-    public void OnFetchWeatherSuccessful(CurrentWeatherData weatherData) {
+    public void OnFetchWeatherSuccessful(CurrentWeatherData weatherData,
+                                         WeatherForecastData weatherForecastData) {
         int resId = imageLoaderHelper.getBackgroundDrawableResource(weatherData);
         paletteHelper.getPaletteColor(resId);
         viewMvc.setBackgroundImage(resId);
-        viewMvc.bindView(weatherData);
+        viewMvc.bindView(weatherData,weatherForecastData);
         viewMvc.stopRefreshing();
     }
 

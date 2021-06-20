@@ -7,7 +7,7 @@ import com.akshansh.weatherapi.common.graphics.ImageLoaderHelper;
 import com.akshansh.weatherapi.common.ViewMvcFactory;
 import com.akshansh.weatherapi.common.graphics.PaletteHelper;
 import com.akshansh.weatherapi.common.graphics.WindowStatusBarHelper;
-import com.akshansh.weatherapi.networking.currentweather.FetchWeatherService;
+import com.akshansh.weatherapi.networking.weather.FetchWeatherService;
 import com.akshansh.weatherapi.screens.common.toast.ToastHelper;
 import com.akshansh.weatherapi.currentweather.FetchWeatherEndpoint;
 import com.akshansh.weatherapi.currentweather.FetchWeatherUseCase;
@@ -25,8 +25,12 @@ public class ControllerModule {
         return activityModule.getViewMvcFactory();
     }
 
-    public Retrofit getRetrofit(){
-        return activityModule.getRetrofit();
+    public Retrofit getCurrentWeatherRetrofit(){
+        return activityModule.getCurrentWeatherRetrofit();
+    }
+
+    public Retrofit getWeatherForecastRetrofit(){
+        return activityModule.getWeatherForecastRetrofit();
     }
 
     public ToastHelper getToastHelper(){
@@ -58,8 +62,8 @@ public class ControllerModule {
     }
 
     public FetchWeatherEndpoint getFetchWeatherService(){
-        return new FetchWeatherService(getRetrofit(),getWeatherDataSyncHelper()
-                ,getInternetConnectionTester());
+        return new FetchWeatherService(getCurrentWeatherRetrofit(),getWeatherForecastRetrofit(),
+                getWeatherDataSyncHelper(),getInternetConnectionTester());
     }
 
     public FetchWeatherUseCase getFetchWeatherUseCase(){

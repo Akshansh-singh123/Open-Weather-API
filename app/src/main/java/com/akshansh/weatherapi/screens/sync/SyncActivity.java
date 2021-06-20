@@ -2,6 +2,7 @@ package com.akshansh.weatherapi.screens.sync;
 
 import android.os.Bundle;
 
+import com.akshansh.weatherapi.networking.weathermodels.WeatherForecastData;
 import com.akshansh.weatherapi.screens.common.screensnavigator.ScreensNavigator;
 import com.akshansh.weatherapi.common.utils.WeatherDataSyncHelper;
 import com.akshansh.weatherapi.databinding.ActivitySyncBinding;
@@ -33,11 +34,11 @@ public class SyncActivity extends BaseActivity implements FetchWeatherUseCase.Li
     protected void onStart() {
         super.onStart();
         fetchWeatherUseCase.registerListener(this);
-        if(weatherDataSyncHelper.getWeatherDataSynced() == null) {
-            fetchWeatherUseCase.fetchWeatherForecast("Jamshedpur", "metric");
-        }else{
+        if(weatherDataSyncHelper.isSynced()) {
             screensNavigator.syncToMainActivity();
+            return;
         }
+        fetchWeatherUseCase.fetchWeatherForecast("Jamshedpur", "metric");
     }
 
     @Override
@@ -48,7 +49,8 @@ public class SyncActivity extends BaseActivity implements FetchWeatherUseCase.Li
     }
 
     @Override
-    public void OnFetchWeatherSuccessful(CurrentWeatherData weatherData) {
+    public void OnFetchWeatherSuccessful(CurrentWeatherData weatherData,
+                                         WeatherForecastData weatherForecastData) {
         screensNavigator.syncToMainActivity();
     }
 

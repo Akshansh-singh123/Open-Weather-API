@@ -7,6 +7,10 @@ import com.akshansh.weatherapi.screens.common.toolbar.ToolbarViewMvc;
 import com.akshansh.weatherapi.screens.common.toolbar.ToolbarViewMvcImpl;
 import com.akshansh.weatherapi.screens.main.MainViewMvc;
 import com.akshansh.weatherapi.screens.main.MainViewMvcImpl;
+import com.akshansh.weatherapi.screens.main.forecastitem.ForecastListItemViewMvc;
+import com.akshansh.weatherapi.screens.main.forecastitem.ForecastListItemViewMvcImpl;
+import com.akshansh.weatherapi.screens.main.forecastitem.dayselectitem.DaySelectItemViewMvcImpl;
+import com.akshansh.weatherapi.screens.main.forecastitem.dayselectitem.DaySelectListItemViewMvc;
 import com.akshansh.weatherapi.screens.main.headeritem.HeaderListItemViewMvc;
 import com.akshansh.weatherapi.screens.main.headeritem.HeaderListItemViewMvcImpl;
 import com.akshansh.weatherapi.screens.main.precipitationitem.PrecipitationListItemViewMvc;
@@ -39,5 +43,13 @@ public class ViewMvcFactory {
 
     public PrecipitationListItemViewMvc getPrecipitationListItemViewMvc(ViewGroup parent){
         return new PrecipitationListItemViewMvcImpl(inflater,parent);
+    }
+
+    public ForecastListItemViewMvc getForecastListItemViewMvc(ViewGroup parent) {
+        return new ForecastListItemViewMvcImpl(inflater,parent,this);
+    }
+
+    public DaySelectListItemViewMvc getDaySelectListItemViewMvc(ViewGroup parent) {
+        return new DaySelectItemViewMvcImpl(inflater,parent);
     }
 }
