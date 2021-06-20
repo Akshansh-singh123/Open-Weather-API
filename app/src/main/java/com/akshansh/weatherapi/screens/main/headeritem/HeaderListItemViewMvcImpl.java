@@ -1,15 +1,19 @@
 package com.akshansh.weatherapi.screens.main.headeritem;
 
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.content.res.AppCompatResources;
 
 import com.akshansh.weatherapi.R;
+import com.akshansh.weatherapi.common.graphics.IconLoaderHelper;
 import com.akshansh.weatherapi.databinding.WeatherHeaderItemBinding;
 import com.akshansh.weatherapi.networking.weathermodels.CurrentWeatherData;
 import com.akshansh.weatherapi.screens.common.views.BaseViewMvc;
+import com.google.android.material.textview.MaterialTextView;
 
 import java.util.Locale;
 
@@ -17,7 +21,7 @@ public class HeaderListItemViewMvcImpl extends BaseViewMvc implements HeaderList
     private WeatherHeaderItemBinding binding;
     private final TextView temperatureTextView;
     private final TextView temperatureUnitsTextView;
-    private final TextView weatherTitleTextView;
+    private final MaterialTextView weatherTitleTextView;
     private final TextView weatherDescriptionTextView;
 
     public HeaderListItemViewMvcImpl(@NonNull LayoutInflater inflater, ViewGroup parent) {
@@ -35,8 +39,15 @@ public class HeaderListItemViewMvcImpl extends BaseViewMvc implements HeaderList
             setMainTemperature(weatherData.getForecast().getTemperature());
             setTemperatureUnits();
             setWeatherTitle(weatherData.getWeather().get(0).getWeatherTitle());
+            setWeatherIcon(weatherData.getWeather().get(0).getIcon());
             setWeatherDescription(weatherData.getWeather().get(0).getWeatherDescription());
         }
+    }
+
+    private void setWeatherIcon(String icon) {
+        weatherTitleTextView
+                .setCompoundDrawablesWithIntrinsicBounds(IconLoaderHelper.getWeatherIcon(icon),
+                0,0,0);
     }
 
     private void setMainTemperature(double temperature) {

@@ -1,7 +1,10 @@
 package com.akshansh.weatherapi.screens.common.views;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.view.View;
+
+import androidx.appcompat.content.res.AppCompatResources;
 
 public abstract class BaseViewMvc implements ViewMvc{
     private View rootView;
@@ -20,6 +23,10 @@ public abstract class BaseViewMvc implements ViewMvc{
 
     protected int getColor(int resId){
         return getContext().getColor(resId);
+    }
+
+    protected Drawable getDrawable(int resId){
+        return AppCompatResources.getDrawable(getContext(),resId);
     }
 
     @Override

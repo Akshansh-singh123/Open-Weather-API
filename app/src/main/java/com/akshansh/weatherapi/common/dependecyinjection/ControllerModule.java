@@ -1,5 +1,6 @@
 package com.akshansh.weatherapi.common.dependecyinjection;
 
+import com.akshansh.weatherapi.common.graphics.IconLoaderHelper;
 import com.akshansh.weatherapi.common.utils.InternetConnectionTester;
 import com.akshansh.weatherapi.screens.common.screensnavigator.ScreensNavigator;
 import com.akshansh.weatherapi.common.utils.WeatherDataSyncHelper;

@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.UiThread;
 
 import com.akshansh.weatherapi.R;
+import com.akshansh.weatherapi.common.graphics.IconLoaderHelper;
 import com.akshansh.weatherapi.databinding.DayForecastListItemBinding;
 import com.akshansh.weatherapi.networking.weathermodels.forecastdata.ForecastData;
 import com.akshansh.weatherapi.networking.weathermodels.weather.Weather;
@@ -80,7 +81,8 @@ public class DaySelectItemViewMvcImpl extends BaseObservableViewMvc<DaySelectLis
     }
 
     private void bindWeatherIcon(List<Weather> weather) {
-        weatherIcon.setImageResource(R.drawable.ic_day_rain);
+        String iconCode = weather.get(0).getIcon();
+        weatherIcon.setImageResource(IconLoaderHelper.getWeatherIcon(iconCode));
     }
 
     @UiThread

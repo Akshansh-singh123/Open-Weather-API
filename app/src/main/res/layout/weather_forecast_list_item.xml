@@ -131,6 +131,8 @@
             android:layout_marginTop="8dp"
             app:thumbColor="@color/white"
             app:trackColor="@color/white"
+            app:labelStyle="@style/Widget.MaterialComponents.Tooltip"
+            app:labelBehavior="floating"
             app:tickColorInactive="@color/secondaryDarkColor"
             tools:stepSize="3"
             tools:valueFrom="0"

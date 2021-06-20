@@ -12,11 +12,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.akshansh.weatherapi.R;
 import com.akshansh.weatherapi.common.ViewMvcFactory;
+import com.akshansh.weatherapi.common.graphics.IconLoaderHelper;
 import com.akshansh.weatherapi.databinding.WeatherForecastListItemBinding;
 import com.akshansh.weatherapi.networking.weathermodels.WeatherForecastData;
 import com.akshansh.weatherapi.networking.weathermodels.forecastdata.ForecastData;
 import com.akshansh.weatherapi.screens.common.views.BaseViewMvc;
 import com.akshansh.weatherapi.screens.main.forecastitem.dayselectitem.DaySelectListItemAdapter;
+import com.google.android.material.slider.LabelFormatter;
 import com.google.android.material.slider.Slider;
 
 import java.text.SimpleDateFormat;
@@ -73,6 +75,8 @@ public class ForecastListItemViewMvcImpl extends BaseViewMvc implements Forecast
     @Override
     public void bindView(WeatherForecastData weatherForecastData) {
         hashForecastDataByDate(weatherForecastData.getForecastData());
+        temperatureUnitTextView.setText(String.format(Locale.ENGLISH,"%sC",
+                getString(R.string.degrees_symbol)));
     }
 
     @Override
@@ -80,19 +84,25 @@ public class ForecastListItemViewMvcImpl extends BaseViewMvc implements Forecast
         if(listener != null){
             hourSlider.removeOnChangeListener(listener);
         }
-
         List<ForecastData> selectedDayForecast = forecastDataByDates.get(key);
         listener = new ValueChangeListener(selectedDayForecast);
+        SliderLabelFormatter formatter = new SliderLabelFormatter(selectedDayForecast);
         hourSlider.setValueFrom(0);
         hourSlider.setStepSize(1);
         hourSlider.setValueTo(selectedDayForecast.size()-1);
         hourSlider.setValue(0);
+
         bindWeatherDescription(selectedDayForecast.get(0));
         bindMainTemperature(selectedDayForecast.get(0));
         bindWeatherForecastData(selectedDayForecast.get(0));
+        bindWeatherIcon(selectedDayForecast.get(0));
         hourSlider.addOnChangeListener(listener);
-        temperatureUnitTextView.setText(String.format(Locale.ENGLISH,"%sC",
-                getString(R.string.degrees_symbol)));
+        hourSlider.setLabelFormatter(formatter);
+    }
+
+    private void bindWeatherIcon(ForecastData forecastData){
+        String iconId = forecastData.getWeather().get(0).getIcon();
+        weatherIcon.setImageResource(IconLoaderHelper.getWeatherIcon(iconId));
     }
 
     private void bindWeatherDescription(ForecastData forecastData) {
@@ -129,8 +139,21 @@ public class ForecastListItemViewMvcImpl extends BaseViewMvc implements Forecast
             }
             forecastDataByDates.get(day).add(data);
         }
+        filterMap();
         adapter.bindTreeMap(forecastDataByDates);
         OnDaySelected(forecastDataByDates.firstKey());
+    }
+
+    private void filterMap() {
+        List<String> keysToRemove = new ArrayList<>();
+        for (String key : forecastDataByDates.keySet()) {
+            if (forecastDataByDates.get(key).size() < 2) {
+                keysToRemove.add(key);
+            }
+        }
+        for (String key : keysToRemove) {
+            forecastDataByDates.remove(key);
+        }
     }
 
     private class ValueChangeListener implements Slider.OnChangeListener{
@@ -146,6 +169,35 @@ public class ForecastListItemViewMvcImpl extends BaseViewMvc implements Forecast
             bindWeatherDescription(selectedForecastData.get(index));
             bindMainTemperature(selectedForecastData.get(index));
             bindWeatherForecastData(selectedForecastData.get(index));
+            bindWeatherIcon(selectedForecastData.get(index));
+        }
+    }
+
+    private static class SliderLabelFormatter implements LabelFormatter{
+        private final List<ForecastData> forecastData;
+        private final SimpleDateFormat labelDateFormat;
+        private final List<String> labels;
+
+        public SliderLabelFormatter(List<ForecastData> forecastData) {
+            this.forecastData = forecastData;
+            labelDateFormat = new SimpleDateFormat("h:mm aa",Locale.ENGLISH);
+            labels = new ArrayList<>();
+            populateLabels();
+        }
+
+        @NonNull
+        @Override
+        public String getFormattedValue(float value) {
+            int index = (int)value;
+            return labels.get(index);
+        }
+
+        private void populateLabels() {
+            labels.clear();
+            for (ForecastData data : forecastData) {
+                String label = labelDateFormat.format(new Date(data.getWeatherTimestamp()*1000L));
+                labels.add(label);
+            }
         }
     }
 }
