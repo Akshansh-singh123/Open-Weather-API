@@ -29,7 +29,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.TreeMap;
 
-public class ForecastListItemViewMvcImpl extends BaseViewMvc implements ForecastListItemViewMvc, DaySelectListItemAdapter.Listener {
+public class ForecastListItemViewMvcImpl extends BaseViewMvc implements
+        ForecastListItemViewMvc, DaySelectListItemAdapter.Listener {
     private WeatherForecastListItemBinding binding;
     private final Slider hourSlider;
     private final TextView weatherDescriptionTextView;

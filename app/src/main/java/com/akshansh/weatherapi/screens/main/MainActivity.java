@@ -2,6 +2,10 @@ package com.akshansh.weatherapi.screens.main;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.PersistableBundle;
+import android.util.Log;
+
+import androidx.annotation.NonNull;
 
 import com.akshansh.weatherapi.common.graphics.ImageLoaderHelper;
 import com.akshansh.weatherapi.common.graphics.PaletteHelper;
@@ -21,6 +25,8 @@ public class MainActivity extends BaseActivity implements MainViewMvc.Listener,
     private PaletteHelper paletteHelper;
     private WindowStatusBarHelper windowStatusBarHelper;
 
+    private boolean initialized = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,7 +45,10 @@ public class MainActivity extends BaseActivity implements MainViewMvc.Listener,
         viewMvc.registerListener(this);
         fetchWeatherUseCase.registerListener(this);
         paletteHelper.registerListener(this);
-        fetchWeatherUseCase.fetchWeatherForecast("Jamshedpur","metric");
+        if(!initialized) {
+            fetchWeatherUseCase.fetchWeatherForecast("Jamshedpur", "metric");
+            initialized = true;
+        }
     }
 
     @Override
@@ -49,6 +58,7 @@ public class MainActivity extends BaseActivity implements MainViewMvc.Listener,
         fetchWeatherUseCase.unregisterListener(this);
         viewMvc.clearBinding();
         paletteHelper.unregisterListener(this);
+        initialized = false;
     }
 
     @Override

@@ -1,6 +1,5 @@
 package com.akshansh.weatherapi.screens.main;
 
-import android.animation.ObjectAnimator;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
