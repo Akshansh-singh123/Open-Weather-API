@@ -13,23 +13,29 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 public class FetchWeatherService implements FetchWeatherEndpoint {
-    private final Retrofit currentWeatherRetrofit;
-    private final Retrofit weatherForecastRetrofit;
+    private final Retrofit currentWeatherRetrofitByCity;
+    private final Retrofit weatherForecastRetrofitByCity;
+    private final Retrofit currentWeatherRetrofitByLocation;
+    private final Retrofit weatherForecastRetrofitByLocation;
     private final WeatherDataSyncHelper weatherDataSyncHelper;
     private final InternetConnectionTester internetConnectionTester;
 
-    public FetchWeatherService(Retrofit currentWeatherRetrofit,
-                               Retrofit weatherForecastRetrofit,
+    public FetchWeatherService(Retrofit currentWeatherRetrofitByCity,
+                               Retrofit weatherForecastRetrofitByCity,
+                               Retrofit currentWeatherRetrofitByLocation,
+                               Retrofit weatherForecastRetrofitByLocation,
                                WeatherDataSyncHelper weatherDataSyncHelper,
                                InternetConnectionTester internetConnectionTester) {
-        this.currentWeatherRetrofit = currentWeatherRetrofit;
-        this.weatherForecastRetrofit = weatherForecastRetrofit;
+        this.currentWeatherRetrofitByCity = currentWeatherRetrofitByCity;
+        this.weatherForecastRetrofitByCity = weatherForecastRetrofitByCity;
+        this.currentWeatherRetrofitByLocation = currentWeatherRetrofitByLocation;
+        this.weatherForecastRetrofitByLocation = weatherForecastRetrofitByLocation;
         this.weatherDataSyncHelper = weatherDataSyncHelper;
         this.internetConnectionTester = internetConnectionTester;
     }
 
     @Override
-    public void fetchWeatherForecast(String city, String units, Callback callback)
+    public void fetchWeatherForecastByCity(String city, String units, Callback callback)
             throws NetworkException {
         if(weatherDataSyncHelper.isSynced()){
             callback.OnFetchWeatherSuccessful(weatherDataSyncHelper.getWeatherDataSynced(),
@@ -40,12 +46,32 @@ public class FetchWeatherService implements FetchWeatherEndpoint {
             throw new NetworkException();
         }
 
-        fetchCurrentWeather(city,units,callback);
+        fetchCurrentWeatherByCity(city,units,callback);
     }
 
-    private void fetchCurrentWeather(String city, String units, Callback callback) {
-        OpenWeatherApi openWeatherApi = currentWeatherRetrofit.create(OpenWeatherApi.class);
-        Call<CurrentWeatherData> call = openWeatherApi.getCurrentWeather(city, Constants.API_KEY,units);
+    @Override
+    public void fetchWeatherForecastByLocation(double latitude, double longitude,
+                                               String units,
+                                               Callback callback) throws NetworkException {
+        if(weatherDataSyncHelper.isSynced()){
+            callback.OnFetchWeatherSuccessful(weatherDataSyncHelper.getWeatherDataSynced(),
+                    weatherDataSyncHelper.getWeatherForecastDataSynced());
+        }
+
+        if (!internetConnectionTester.isConnected()){
+            throw new NetworkException();
+        }
+
+        fetchCurrentWeatherByLocation(latitude,longitude,units,callback);
+    }
+
+    private void fetchCurrentWeatherByLocation(double latitude, double longitude,
+                                               String units, Callback callback) {
+        OpenWeatherApi openWeatherApi = currentWeatherRetrofitByLocation.create(OpenWeatherApi.class);
+        Call<CurrentWeatherData> call = openWeatherApi.getCurrentWeatherByLocation(
+                String.valueOf(latitude),
+                String.valueOf(longitude),
+                Constants.API_KEY,units);
         call.enqueue(new retrofit2.Callback<CurrentWeatherData>() {
             @Override
             public void onResponse(Call<CurrentWeatherData> call, Response<CurrentWeatherData> response) {
@@ -53,7 +79,8 @@ public class FetchWeatherService implements FetchWeatherEndpoint {
                     callback.OnFetchWeatherFailure();
                     return;
                 }
-                fetchForecast(city,units,callback,response.body());
+                fetchForecastByLocation(latitude,longitude,
+                        units,callback,response.body());
             }
 
             @Override
@@ -63,14 +90,60 @@ public class FetchWeatherService implements FetchWeatherEndpoint {
         });
     }
 
-    private void fetchForecast(String city, String units, Callback callback,
-                               CurrentWeatherData currentWeatherData) {
-        OpenWeatherApi openWeatherApi = weatherForecastRetrofit.create(OpenWeatherApi.class);
-        Call<WeatherForecastData> call = openWeatherApi.getWeatherForecast(city,Constants.API_KEY,units);
+    private void fetchCurrentWeatherByCity(String city, String units, Callback callback) {
+        OpenWeatherApi openWeatherApi = currentWeatherRetrofitByCity.create(OpenWeatherApi.class);
+        Call<CurrentWeatherData> call = openWeatherApi.getCurrentWeatherByCityName(city, Constants.API_KEY,units);
+        call.enqueue(new retrofit2.Callback<CurrentWeatherData>() {
+            @Override
+            public void onResponse(Call<CurrentWeatherData> call, Response<CurrentWeatherData> response) {
+                if(!response.isSuccessful()) {
+                    callback.OnFetchWeatherFailure();
+                    return;
+                }
+                fetchForecastByCityName(city,units,callback,response.body());
+            }
+
+            @Override
+            public void onFailure(Call<CurrentWeatherData> call, Throwable t) {
+                callback.OnFetchWeatherFailure();
+            }
+        });
+    }
+
+    private void fetchForecastByLocation(double latitude, double longitude,
+                                         String units, Callback callback,
+                                         CurrentWeatherData currentWeatherData) {
+        OpenWeatherApi openWeatherApi = weatherForecastRetrofitByLocation
+                .create(OpenWeatherApi.class);
+        Call<WeatherForecastData> call = openWeatherApi
+                .getWeatherForecastByLocation(String.valueOf(latitude),
+                        String.valueOf(longitude),
+                        Constants.API_KEY,units);
+        call.enqueue(new retrofit2.Callback<WeatherForecastData>() {
+            @Override
+            public void onResponse(Call<WeatherForecastData> call,
+                                   Response<WeatherForecastData> response) {
+                weatherDataSyncHelper.syncWeatherData(currentWeatherData,response.body(),
+                        latitude,longitude,null);
+                callback.OnFetchWeatherSuccessful(currentWeatherData,response.body());
+            }
+
+            @Override
+            public void onFailure(Call<WeatherForecastData> call, Throwable t) {
+                callback.OnFetchWeatherFailure();
+            }
+        });
+    }
+
+    private void fetchForecastByCityName(String city, String units, Callback callback,
+                                         CurrentWeatherData currentWeatherData) {
+        OpenWeatherApi openWeatherApi = weatherForecastRetrofitByCity.create(OpenWeatherApi.class);
+        Call<WeatherForecastData> call = openWeatherApi.getWeatherForecastByCityName(city,Constants.API_KEY,units);
         call.enqueue(new retrofit2.Callback<WeatherForecastData>() {
             @Override
             public void onResponse(Call<WeatherForecastData> call, Response<WeatherForecastData> response) {
-                weatherDataSyncHelper.syncWeatherData(currentWeatherData,response.body());
+                weatherDataSyncHelper.syncWeatherData(currentWeatherData,response.body(),
+                        null,null,city);
                 callback.OnFetchWeatherSuccessful(currentWeatherData,response.body());
             }
 

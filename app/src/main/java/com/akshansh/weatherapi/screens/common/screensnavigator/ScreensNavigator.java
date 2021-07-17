@@ -5,7 +5,7 @@ import android.os.Handler;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.akshansh.weatherapi.screens.main.MainActivity;
+import com.akshansh.weatherapi.screens.views.main.MainActivity;
 
 public class ScreensNavigator {
     private final AppCompatActivity activity;

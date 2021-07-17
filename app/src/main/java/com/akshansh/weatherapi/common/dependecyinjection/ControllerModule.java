@@ -1,6 +1,7 @@
 package com.akshansh.weatherapi.common.dependecyinjection;
 
 import com.akshansh.weatherapi.common.utils.InternetConnectionTester;
+import com.akshansh.weatherapi.common.utils.PermissionHelper;
 import com.akshansh.weatherapi.screens.common.screensnavigator.ScreensNavigator;
 import com.akshansh.weatherapi.common.utils.WeatherDataSyncHelper;
 import com.akshansh.weatherapi.common.graphics.ImageLoaderHelper;
@@ -11,6 +12,8 @@ import com.akshansh.weatherapi.networking.weather.FetchWeatherService;
 import com.akshansh.weatherapi.screens.common.toast.ToastHelper;
 import com.akshansh.weatherapi.weather.FetchWeatherEndpoint;
 import com.akshansh.weatherapi.weather.FetchWeatherUseCase;
+
+import java.util.concurrent.ExecutorService;
 
 import retrofit2.Retrofit;
 
@@ -25,12 +28,20 @@ public class ControllerModule {
         return activityModule.getViewMvcFactory();
     }
 
-    public Retrofit getCurrentWeatherRetrofit(){
-        return activityModule.getCurrentWeatherRetrofit();
+    public Retrofit getCurrentWeatherRetrofitByCity(){
+        return activityModule.getCurrentWeatherRetrofitByCity();
     }
 
-    public Retrofit getWeatherForecastRetrofit(){
-        return activityModule.getWeatherForecastRetrofit();
+    public Retrofit getWeatherForecastRetrofitByCity(){
+        return activityModule.getWeatherForecastRetrofitByCity();
+    }
+
+    public Retrofit getCurrentWeatherRetrofitByLocation(){
+        return activityModule.getCurrentWeatherRetrofitByLocation();
+    }
+
+    public Retrofit getWeatherForecastRetrofitByLocation(){
+        return activityModule.getWeatherForecastRetrofitByLocation();
     }
 
     public ToastHelper getToastHelper(){
@@ -57,13 +68,25 @@ public class ControllerModule {
         return activityModule.getInternetConnectionTester();
     }
 
+    public ExecutorService getExecutor(){
+        return activityModule.getExecutor();
+    }
+
+    public PermissionHelper getPermissionHelper(){
+        return activityModule.getPermissionHelper();
+    }
+
     public ImageLoaderHelper getImageLoaderHelper(){
         return new ImageLoaderHelper();
     }
 
     public FetchWeatherEndpoint getFetchWeatherService(){
-        return new FetchWeatherService(getCurrentWeatherRetrofit(),getWeatherForecastRetrofit(),
-                getWeatherDataSyncHelper(),getInternetConnectionTester());
+        return new FetchWeatherService(getCurrentWeatherRetrofitByCity(),
+                getWeatherForecastRetrofitByCity(),
+                getCurrentWeatherRetrofitByLocation(),
+                getWeatherForecastRetrofitByLocation(),
+                getWeatherDataSyncHelper(),
+                getInternetConnectionTester());
     }
 
     public FetchWeatherUseCase getFetchWeatherUseCase(){

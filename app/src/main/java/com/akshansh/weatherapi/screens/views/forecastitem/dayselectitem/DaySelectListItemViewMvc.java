@@ -1,6 +1,5 @@
-package com.akshansh.weatherapi.screens.main.forecastitem.dayselectitem;
+package com.akshansh.weatherapi.screens.views.forecastitem.dayselectitem;
 
-import com.akshansh.weatherapi.networking.weathermodels.WeatherForecastData;
 import com.akshansh.weatherapi.networking.weathermodels.forecastdata.ForecastData;
 import com.akshansh.weatherapi.screens.common.views.ObservableViewMvc;
 

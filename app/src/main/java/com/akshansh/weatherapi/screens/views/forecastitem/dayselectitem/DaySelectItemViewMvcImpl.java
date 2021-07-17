@@ -1,6 +1,7 @@
-package com.akshansh.weatherapi.screens.main.forecastitem.dayselectitem;
+package com.akshansh.weatherapi.screens.views.forecastitem.dayselectitem;
 
 import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.UiThread;
+import androidx.annotation.WorkerThread;
 
 import com.akshansh.weatherapi.R;
 import com.akshansh.weatherapi.common.graphics.IconLoaderHelper;
@@ -32,6 +33,7 @@ public class DaySelectItemViewMvcImpl extends BaseObservableViewMvc<DaySelectLis
     private final TextView minTemperatureTextView;
     private final ImageView weatherIcon;
     private final View container;
+    private final Handler uiThread = new Handler(Looper.getMainLooper());
     private List<ForecastData> forecastData;
 
     public DaySelectItemViewMvcImpl(@NonNull LayoutInflater inflater, ViewGroup parent) {
@@ -86,23 +88,25 @@ public class DaySelectItemViewMvcImpl extends BaseObservableViewMvc<DaySelectLis
         weatherIcon.setImageResource(IconLoaderHelper.getWeatherIcon(iconCode));
     }
 
+    @WorkerThread
     private void calculateMinMaxTemperature(){
-        new Handler().post(new Runnable() {
-            @Override
-            public void run() {
-                double minTemperature = forecastData.get(0).getMainForecast().getMinTemperature();
-                double maxTemperature = forecastData.get(0).getMainForecast().getMaxTemperature();
-                for (ForecastData data : forecastData) {
-                    if(data.getMainForecast().getMaxTemperature() > maxTemperature){
-                        maxTemperature = data.getMainForecast().getMaxTemperature();
-                    }
-                    if(data.getMainForecast().getMinTemperature() < minTemperature){
-                        minTemperature = data.getMainForecast().getMinTemperature();
-                    }
+        new Thread(() -> {
+            double minTemperature = forecastData.get(0).getMainForecast().getMinTemperature();
+            double maxTemperature = forecastData.get(0).getMainForecast().getMaxTemperature();
+            for (ForecastData data : forecastData) {
+                if(data.getMainForecast().getMaxTemperature() > maxTemperature){
+                    maxTemperature = data.getMainForecast().getMaxTemperature();
                 }
-                setMinMaxTemperatureView(minTemperature,maxTemperature);
+                if(data.getMainForecast().getMinTemperature() < minTemperature){
+                    minTemperature = data.getMainForecast().getMinTemperature();
+                }
             }
-        });
+            double finalMinTemperature = minTemperature;
+            double finalMaxTemperature = maxTemperature;
+            uiThread.post(()-> {
+                setMinMaxTemperatureView(finalMinTemperature, finalMaxTemperature);
+            });
+        }).start();
     }
 
     private void setMinMaxTemperatureView(double minTemperature,double maxTemperature) {

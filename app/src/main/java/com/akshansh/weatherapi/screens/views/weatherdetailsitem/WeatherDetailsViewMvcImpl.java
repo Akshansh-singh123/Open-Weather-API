@@ -1,4 +1,4 @@
-package com.akshansh.weatherapi.screens.main.weatherdetailsitem;
+package com.akshansh.weatherapi.screens.views.weatherdetailsitem;
 
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -11,12 +11,9 @@ import com.akshansh.weatherapi.databinding.WeatherDetailsItemBinding;
 import com.akshansh.weatherapi.networking.weathermodels.CurrentWeatherData;
 import com.akshansh.weatherapi.screens.common.views.BaseViewMvc;
 
-import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
-import java.util.TimeZone;
 
 public class WeatherDetailsViewMvcImpl extends BaseViewMvc implements WeatherDetailsItemViewMvc {
     private WeatherDetailsItemBinding binding;

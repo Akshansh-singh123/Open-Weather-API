@@ -13,23 +13,42 @@ public class WeatherDataSyncHelper {
     private static final String FILE_KEY = "CURRENT_WEATHER_DATA";
     private static final String CURRENT_WEATHER_DATA = "CURRENT_WEATHER_DATA_JSON";
     private static final String WEATHER_FORECAST_DATA = "WEATHER_FORECAST_DATA_JSON";
+    private static final String LATITUDE_DATA = "LATITUDE_DATA";
+    private static final String LONGITUDE_DATA = "LONGITUDE_DATA";
+    private static final String CITY_NAME_DATA = "CITY_NAME_DATA";
 
     @Nullable
     private CurrentWeatherData weatherDataSynced;
     @Nullable
     private WeatherForecastData weatherForecastDataSynced;
+    @Nullable
+    private Double latitude;
+    @Nullable
+    private Double longitude;
+    @Nullable
+    private String city;
+
     private final SharedPreferences sharedPreferences;
 
     public WeatherDataSyncHelper(Context context) {
         weatherDataSynced = null;
         weatherForecastDataSynced = null;
+        latitude = null;
+        longitude = null;
+        city = null;
         sharedPreferences = context.getSharedPreferences(FILE_KEY, Context.MODE_PRIVATE);
         loadData();
     }
 
-    public void syncWeatherData(CurrentWeatherData weatherData, WeatherForecastData weatherForecastData){
+    public void syncWeatherData(CurrentWeatherData weatherData,
+                                WeatherForecastData weatherForecastData,
+                                @Nullable Double latitude,@Nullable Double longitude,
+                                @Nullable String city){
         weatherDataSynced = weatherData;
         weatherForecastDataSynced = weatherForecastData;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.city = city;
         writeData();
     }
 
@@ -45,6 +64,24 @@ public class WeatherDataSyncHelper {
         return weatherForecastDataSynced;
     }
 
+    @Nullable
+    public Double getLatitude(){
+        loadData();
+        return latitude;
+    }
+
+    @Nullable
+    public Double getLongitude() {
+        loadData();
+        return longitude;
+    }
+
+    @Nullable
+    public String getCity() {
+        loadData();
+        return city;
+    }
+
     private void writeData() {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         Gson gson = new Gson();
@@ -52,17 +89,27 @@ public class WeatherDataSyncHelper {
         String weatherForecastJson = gson.toJson(weatherForecastDataSynced);
         editor.putString(CURRENT_WEATHER_DATA,currentWeatherJson);
         editor.putString(WEATHER_FORECAST_DATA,weatherForecastJson);
+        editor.putString(LATITUDE_DATA, String.valueOf(latitude));
+        editor.putString(LONGITUDE_DATA, String.valueOf(longitude));
+        editor.putString(CITY_NAME_DATA, city);
         editor.apply();
     }
 
     private void loadData(){
         String currentWeatherJson = sharedPreferences.getString(CURRENT_WEATHER_DATA,null);
         String weatherForecastJson = sharedPreferences.getString(WEATHER_FORECAST_DATA, null);
+        String storedLatitude = sharedPreferences.getString(LATITUDE_DATA,null);
+        String storedLongitude = sharedPreferences.getString(LONGITUDE_DATA,null);
+        city = sharedPreferences.getString(CITY_NAME_DATA, null);
         Gson gson = new Gson();
         if(currentWeatherJson != null)
             weatherDataSynced = gson.fromJson(currentWeatherJson,CurrentWeatherData.class);
         if(weatherForecastJson != null)
             weatherForecastDataSynced = gson.fromJson(weatherForecastJson,WeatherForecastData.class);
+        if(storedLatitude != null)
+            latitude = Double.parseDouble(storedLatitude);
+        if(storedLongitude != null)
+            longitude = Double.parseDouble(storedLongitude);
     }
 
     public void clearLocalWeatherData(){
@@ -72,6 +119,7 @@ public class WeatherDataSyncHelper {
     }
 
     public boolean isSynced(){
-        return weatherDataSynced != null && weatherForecastDataSynced != null;
+        return weatherDataSynced != null && weatherForecastDataSynced != null &&
+                latitude != null && longitude != null;
     }
 }

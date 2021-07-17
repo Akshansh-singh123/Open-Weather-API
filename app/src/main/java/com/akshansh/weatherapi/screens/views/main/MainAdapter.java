@@ -1,4 +1,4 @@
-package com.akshansh.weatherapi.screens.main;
+package com.akshansh.weatherapi.screens.views.main;
 
 import android.view.ViewGroup;
 
@@ -8,14 +8,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.akshansh.weatherapi.common.ViewMvcFactory;
 import com.akshansh.weatherapi.networking.weathermodels.CurrentWeatherData;
 import com.akshansh.weatherapi.networking.weathermodels.WeatherForecastData;
-import com.akshansh.weatherapi.screens.main.forecastitem.ForecastListItemViewHolder;
-import com.akshansh.weatherapi.screens.main.forecastitem.ForecastListItemViewMvc;
-import com.akshansh.weatherapi.screens.main.headeritem.HeaderListItemViewHolder;
-import com.akshansh.weatherapi.screens.main.headeritem.HeaderListItemViewMvc;
-import com.akshansh.weatherapi.screens.main.precipitationitem.PrecipitationListItemViewHolder;
-import com.akshansh.weatherapi.screens.main.precipitationitem.PrecipitationListItemViewMvc;
-import com.akshansh.weatherapi.screens.main.weatherdetailsitem.WeatherDetailsItemViewHolder;
-import com.akshansh.weatherapi.screens.main.weatherdetailsitem.WeatherDetailsItemViewMvc;
+import com.akshansh.weatherapi.screens.views.forecastitem.ForecastListItemViewHolder;
+import com.akshansh.weatherapi.screens.views.forecastitem.ForecastListItemViewMvc;
+import com.akshansh.weatherapi.screens.views.headeritem.HeaderListItemViewHolder;
+import com.akshansh.weatherapi.screens.views.headeritem.HeaderListItemViewMvc;
+import com.akshansh.weatherapi.screens.views.precipitationitem.PrecipitationListItemViewHolder;
+import com.akshansh.weatherapi.screens.views.precipitationitem.PrecipitationListItemViewMvc;
+import com.akshansh.weatherapi.screens.views.weatherdetailsitem.WeatherDetailsItemViewHolder;
+import com.akshansh.weatherapi.screens.views.weatherdetailsitem.WeatherDetailsItemViewMvc;
 
 public class MainAdapter extends RecyclerView.Adapter {
     private static final int WEATHER_HEADER = 1;

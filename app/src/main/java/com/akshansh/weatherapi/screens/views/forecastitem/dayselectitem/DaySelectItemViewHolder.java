@@ -1,6 +1,4 @@
-package com.akshansh.weatherapi.screens.main.forecastitem.dayselectitem;
-
-import android.view.View;
+package com.akshansh.weatherapi.screens.views.forecastitem.dayselectitem;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;

@@ -10,5 +10,7 @@ public interface FetchWeatherEndpoint {
         void OnFetchWeatherFailure();
     }
 
-    void fetchWeatherForecast(String city, String units, Callback callback) throws NetworkException;
+    void fetchWeatherForecastByCity(String city, String units, Callback callback) throws NetworkException;
+    void fetchWeatherForecastByLocation(double latitude, double longitude, String units,
+                                        Callback callback) throws NetworkException;
 }

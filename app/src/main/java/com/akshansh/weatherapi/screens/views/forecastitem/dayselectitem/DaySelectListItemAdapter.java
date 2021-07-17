@@ -1,4 +1,4 @@
-package com.akshansh.weatherapi.screens.main.forecastitem.dayselectitem;
+package com.akshansh.weatherapi.screens.views.forecastitem.dayselectitem;
 
 import android.view.ViewGroup;
 

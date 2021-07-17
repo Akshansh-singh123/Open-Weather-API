@@ -38,7 +38,8 @@ public class SyncActivity extends BaseActivity implements FetchWeatherUseCase.Li
             screensNavigator.syncToMainActivity();
             return;
         }
-        fetchWeatherUseCase.fetchWeatherForecast("Jamshedpur", "metric");
+        // TODO: 14-07-2021 Change method calls here,fetch location here
+        fetchWeatherUseCase.fetchWeatherForecastByCityName("Jamshedpur", "metric");
     }
 
     @Override

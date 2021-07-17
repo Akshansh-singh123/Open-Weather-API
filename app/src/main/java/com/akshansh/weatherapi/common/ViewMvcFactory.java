@@ -5,18 +5,18 @@ import android.view.ViewGroup;
 
 import com.akshansh.weatherapi.screens.common.toolbar.ToolbarViewMvc;
 import com.akshansh.weatherapi.screens.common.toolbar.ToolbarViewMvcImpl;
-import com.akshansh.weatherapi.screens.main.MainViewMvc;
-import com.akshansh.weatherapi.screens.main.MainViewMvcImpl;
-import com.akshansh.weatherapi.screens.main.forecastitem.ForecastListItemViewMvc;
-import com.akshansh.weatherapi.screens.main.forecastitem.ForecastListItemViewMvcImpl;
-import com.akshansh.weatherapi.screens.main.forecastitem.dayselectitem.DaySelectItemViewMvcImpl;
-import com.akshansh.weatherapi.screens.main.forecastitem.dayselectitem.DaySelectListItemViewMvc;
-import com.akshansh.weatherapi.screens.main.headeritem.HeaderListItemViewMvc;
-import com.akshansh.weatherapi.screens.main.headeritem.HeaderListItemViewMvcImpl;
-import com.akshansh.weatherapi.screens.main.precipitationitem.PrecipitationListItemViewMvc;
-import com.akshansh.weatherapi.screens.main.precipitationitem.PrecipitationListItemViewMvcImpl;
-import com.akshansh.weatherapi.screens.main.weatherdetailsitem.WeatherDetailsItemViewMvc;
-import com.akshansh.weatherapi.screens.main.weatherdetailsitem.WeatherDetailsViewMvcImpl;
+import com.akshansh.weatherapi.screens.views.main.MainViewMvc;
+import com.akshansh.weatherapi.screens.views.main.MainViewMvcImpl;
+import com.akshansh.weatherapi.screens.views.forecastitem.ForecastListItemViewMvc;
+import com.akshansh.weatherapi.screens.views.forecastitem.ForecastListItemViewMvcImpl;
+import com.akshansh.weatherapi.screens.views.forecastitem.dayselectitem.DaySelectItemViewMvcImpl;
+import com.akshansh.weatherapi.screens.views.forecastitem.dayselectitem.DaySelectListItemViewMvc;
+import com.akshansh.weatherapi.screens.views.headeritem.HeaderListItemViewMvc;
+import com.akshansh.weatherapi.screens.views.headeritem.HeaderListItemViewMvcImpl;
+import com.akshansh.weatherapi.screens.views.precipitationitem.PrecipitationListItemViewMvc;
+import com.akshansh.weatherapi.screens.views.precipitationitem.PrecipitationListItemViewMvcImpl;
+import com.akshansh.weatherapi.screens.views.weatherdetailsitem.WeatherDetailsItemViewMvc;
+import com.akshansh.weatherapi.screens.views.weatherdetailsitem.WeatherDetailsViewMvcImpl;
 
 public class ViewMvcFactory {
     private final LayoutInflater inflater;

@@ -1,4 +1,4 @@
-package com.akshansh.weatherapi.screens.main.weatherdetailsitem;
+package com.akshansh.weatherapi.screens.views.weatherdetailsitem;
 
 import androidx.recyclerview.widget.RecyclerView;
 

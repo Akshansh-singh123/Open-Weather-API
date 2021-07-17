@@ -1,8 +1,5 @@
-package com.akshansh.weatherapi.screens.main.forecastitem;
+package com.akshansh.weatherapi.screens.views.forecastitem;
 
-import android.view.View;
-
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class ForecastListItemViewHolder extends RecyclerView.ViewHolder {

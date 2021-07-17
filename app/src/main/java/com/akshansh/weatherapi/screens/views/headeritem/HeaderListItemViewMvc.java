@@ -1,8 +1,8 @@
-package com.akshansh.weatherapi.screens.main.weatherdetailsitem;
+package com.akshansh.weatherapi.screens.views.headeritem;
 
 import com.akshansh.weatherapi.networking.weathermodels.CurrentWeatherData;
 import com.akshansh.weatherapi.screens.common.views.ViewMvc;
 
-public interface WeatherDetailsItemViewMvc extends ViewMvc {
+public interface HeaderListItemViewMvc extends ViewMvc {
     void bindView(CurrentWeatherData weatherData);
 }

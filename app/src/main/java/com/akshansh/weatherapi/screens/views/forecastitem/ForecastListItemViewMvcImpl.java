@@ -1,13 +1,14 @@
-package com.akshansh.weatherapi.screens.main.forecastitem;
+package com.akshansh.weatherapi.screens.views.forecastitem;
 
 import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.UiThread;
+import androidx.annotation.WorkerThread;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -18,7 +19,7 @@ import com.akshansh.weatherapi.databinding.WeatherForecastListItemBinding;
 import com.akshansh.weatherapi.networking.weathermodels.WeatherForecastData;
 import com.akshansh.weatherapi.networking.weathermodels.forecastdata.ForecastData;
 import com.akshansh.weatherapi.screens.common.views.BaseViewMvc;
-import com.akshansh.weatherapi.screens.main.forecastitem.dayselectitem.DaySelectListItemAdapter;
+import com.akshansh.weatherapi.screens.views.forecastitem.dayselectitem.DaySelectListItemAdapter;
 import com.google.android.material.slider.LabelFormatter;
 import com.google.android.material.slider.Slider;
 
@@ -45,6 +46,7 @@ public class ForecastListItemViewMvcImpl extends BaseViewMvc implements
     private final TreeMap<String, List<ForecastData>> forecastDataByDates;
     private final DaySelectListItemAdapter adapter;
     private final SimpleDateFormat keyFormat;
+    private final Handler uiThread = new Handler(Looper.getMainLooper());
 
     private ValueChangeListener listener;
 
@@ -131,25 +133,22 @@ public class ForecastListItemViewMvcImpl extends BaseViewMvc implements
         windSpeedTextView.setText(windSpeed);
     }
 
+    @WorkerThread
     private void hashForecastDataByDate(List<ForecastData> forecastData) {
-        new Handler().post(new Runnable() {
-            @Override
-            public void run() {
-                forecastDataByDates.clear();
-                for (ForecastData data : forecastData) {
-                    String day = keyFormat.format(new Date(data.getWeatherTimestamp()*1000L));
-                    if (!forecastDataByDates.containsKey(day)) {
-                        forecastDataByDates.put(day, new ArrayList<>());
-                    }
-                    forecastDataByDates.get(day).add(data);
+        new Thread(() -> {
+            forecastDataByDates.clear();
+            for (ForecastData data : forecastData) {
+                String day = keyFormat.format(new Date(data.getWeatherTimestamp()*1000L));
+                if (!forecastDataByDates.containsKey(day)) {
+                    forecastDataByDates.put(day, new ArrayList<>());
                 }
-                filterMap();
-                adapter.bindTreeMap(forecastDataByDates);
-                OnDaySelected(forecastDataByDates.firstKey());
+                forecastDataByDates.get(day).add(data);
             }
-        });
+            filterMap();
+        }).start();
     }
 
+    @WorkerThread
     private void filterMap() {
         List<String> keysToRemove = new ArrayList<>();
         for (String key : forecastDataByDates.keySet()) {
@@ -160,6 +159,10 @@ public class ForecastListItemViewMvcImpl extends BaseViewMvc implements
         for (String key : keysToRemove) {
             forecastDataByDates.remove(key);
         }
+        uiThread.post(()->{
+            adapter.bindTreeMap(forecastDataByDates);
+            OnDaySelected(forecastDataByDates.firstKey());
+        });
     }
 
     private class ValueChangeListener implements Slider.OnChangeListener{

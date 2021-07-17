@@ -19,9 +19,35 @@ public class FetchWeatherUseCase extends BaseObservable<FetchWeatherUseCase.List
         this.fetchWeatherEndpoint = fetchWeatherEndpoint;
     }
 
-    public void fetchWeatherForecast(String city, String units){
+    public void fetchWeatherForecastByCityName(String city, String units){
         try {
-            fetchWeatherEndpoint.fetchWeatherForecast(city,units,new FetchWeatherEndpoint.Callback() {
+            fetchWeatherEndpoint.fetchWeatherForecastByCity(city,units,new FetchWeatherEndpoint.Callback() {
+                @Override
+                public void OnFetchWeatherSuccessful(CurrentWeatherData currentWeatherData,
+                                                     WeatherForecastData weatherForecastData) {
+                    for(Listener listener: getListeners()){
+                        listener.OnFetchWeatherSuccessful(currentWeatherData,weatherForecastData);
+                    }
+                }
+
+                @Override
+                public void OnFetchWeatherFailure() {
+                    for(Listener listener: getListeners()){
+                        listener.OnFetchWeatherFailure();
+                    }
+                }
+            });
+        } catch (NetworkException e) {
+            for(Listener listener: getListeners()){
+                listener.OnFetchWeatherNetworkError();
+            }
+        }
+    }
+
+    public void fetchWeatherForecastByLocation(double latitude, double longitude, String units){
+        try {
+            fetchWeatherEndpoint.fetchWeatherForecastByLocation(latitude,longitude,
+                    units,new FetchWeatherEndpoint.Callback() {
                 @Override
                 public void OnFetchWeatherSuccessful(CurrentWeatherData currentWeatherData,
                                                      WeatherForecastData weatherForecastData) {

@@ -1,11 +1,7 @@
-package com.akshansh.weatherapi.screens.main;
+package com.akshansh.weatherapi.screens.views.main;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.PersistableBundle;
-import android.util.Log;
-
-import androidx.annotation.NonNull;
 
 import com.akshansh.weatherapi.common.graphics.ImageLoaderHelper;
 import com.akshansh.weatherapi.common.graphics.PaletteHelper;
@@ -46,7 +42,7 @@ public class MainActivity extends BaseActivity implements MainViewMvc.Listener,
         fetchWeatherUseCase.registerListener(this);
         paletteHelper.registerListener(this);
         if(!initialized) {
-            fetchWeatherUseCase.fetchWeatherForecast("Jamshedpur", "metric");
+            fetchWeatherUseCase.fetchWeatherForecastByCityName("Jamshedpur", "metric");
             initialized = true;
         }
     }
@@ -63,7 +59,7 @@ public class MainActivity extends BaseActivity implements MainViewMvc.Listener,
 
     @Override
     public void OnRefresh() {
-        fetchWeatherUseCase.fetchWeatherForecast("Jamshedpur","metric");
+        fetchWeatherUseCase.fetchWeatherForecastByCityName("Jamshedpur","metric");
     }
 
     @Override
