@@ -1,4 +1,4 @@
-package com.akshansh.weatherapi.screens.views.forecastitem;
+package com.akshansh.weatherapi.screens.main.forecastitem;
 
 import android.os.Handler;
 import android.os.Looper;
@@ -19,7 +19,7 @@ import com.akshansh.weatherapi.databinding.WeatherForecastListItemBinding;
 import com.akshansh.weatherapi.networking.weathermodels.WeatherForecastData;
 import com.akshansh.weatherapi.networking.weathermodels.forecastdata.ForecastData;
 import com.akshansh.weatherapi.screens.common.views.BaseViewMvc;
-import com.akshansh.weatherapi.screens.views.forecastitem.dayselectitem.DaySelectListItemAdapter;
+import com.akshansh.weatherapi.screens.main.forecastitem.dayselectitem.DaySelectListItemAdapter;
 import com.google.android.material.slider.LabelFormatter;
 import com.google.android.material.slider.Slider;
 

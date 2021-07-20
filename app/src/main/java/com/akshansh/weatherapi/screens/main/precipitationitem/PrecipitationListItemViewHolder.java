@@ -1,4 +1,4 @@
-package com.akshansh.weatherapi.screens.views.precipitationitem;
+package com.akshansh.weatherapi.screens.main.precipitationitem;
 
 
 import androidx.annotation.NonNull;

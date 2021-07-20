@@ -1,7 +1,6 @@
-package com.akshansh.weatherapi.screens.views.main;
+package com.akshansh.weatherapi.screens.main.main;
 
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -48,7 +47,7 @@ public class MainViewMvcImpl extends BaseObservableViewMvc<MainViewMvc.Listener>
     @Override
     public void bindView(CurrentWeatherData weatherData, WeatherForecastData weatherForecastData) {
         adapter.bindView(weatherData,weatherForecastData);
-        toolbarViewMvc.setTitle("Jamshedpur");
+        toolbarViewMvc.setTitle(weatherData.getCityName());
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {

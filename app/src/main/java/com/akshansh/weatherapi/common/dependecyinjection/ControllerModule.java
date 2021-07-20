@@ -1,5 +1,10 @@
 package com.akshansh.weatherapi.common.dependecyinjection;
 
+import android.os.Handler;
+import android.os.Looper;
+
+import com.akshansh.weatherapi.common.utils.GPSActivationHelper;
+import com.akshansh.weatherapi.common.utils.GPSLocationHelper;
 import com.akshansh.weatherapi.common.utils.InternetConnectionTester;
 import com.akshansh.weatherapi.common.utils.PermissionHelper;
 import com.akshansh.weatherapi.screens.common.screensnavigator.ScreensNavigator;
@@ -19,6 +24,7 @@ import retrofit2.Retrofit;
 
 public class ControllerModule {
     private final ActivityModule activityModule;
+    private Handler uiThread;
 
     public ControllerModule(ActivityModule activityModule) {
         this.activityModule = activityModule;
@@ -72,8 +78,23 @@ public class ControllerModule {
         return activityModule.getExecutor();
     }
 
+    public Handler getUiThread(){
+        if(uiThread == null){
+            uiThread = new Handler(Looper.getMainLooper());
+        }
+        return uiThread;
+    }
+
     public PermissionHelper getPermissionHelper(){
         return activityModule.getPermissionHelper();
+    }
+
+    public GPSLocationHelper getGPSLocationHelper(){
+        return activityModule.getGPSLocationHelper();
+    }
+
+    public GPSActivationHelper getGPSActivationHelper(){
+        return activityModule.getGPSActivationHelper();
     }
 
     public ImageLoaderHelper getImageLoaderHelper(){

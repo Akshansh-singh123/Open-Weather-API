@@ -8,6 +8,7 @@
     android:background="@color/secondaryDarkColor"
     tools:context=".screens.sync.SyncActivity">
     <ImageView
+        android:id="@+id/icon_legacy"
         android:layout_width="128dp"
         android:layout_height="128dp"
         android:contentDescription="@string/legacy_icon"
@@ -16,4 +17,28 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/fetching_location_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/fetching_location"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/icon_legacy" />
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginEnd="8dp"
+        android:visibility="gone"
+        android:indeterminateTint="@color/white"
+        app:layout_constraintBottom_toBottomOf="@+id/fetching_location_textView"
+        app:layout_constraintEnd_toStartOf="@+id/fetching_location_textView"
+        app:layout_constraintTop_toTopOf="@+id/fetching_location_textView" />
 </androidx.constraintlayout.widget.ConstraintLayout>

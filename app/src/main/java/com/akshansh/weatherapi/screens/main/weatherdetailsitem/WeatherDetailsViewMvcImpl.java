@@ -1,4 +1,4 @@
-package com.akshansh.weatherapi.screens.views.weatherdetailsitem;
+package com.akshansh.weatherapi.screens.main.weatherdetailsitem;
 
 import android.view.LayoutInflater;
 import android.view.ViewGroup;

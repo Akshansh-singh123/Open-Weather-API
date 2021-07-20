@@ -1,11 +1,10 @@
-package com.akshansh.weatherapi.screens.views.headeritem;
+package com.akshansh.weatherapi.screens.main.headeritem;
 
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.content.res.AppCompatResources;
 
 import com.akshansh.weatherapi.R;
 import com.akshansh.weatherapi.common.graphics.IconLoaderHelper;

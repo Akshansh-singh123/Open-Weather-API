@@ -1,4 +1,4 @@
-package com.akshansh.weatherapi.screens.views.main;
+package com.akshansh.weatherapi.screens.main.main;
 
 import com.akshansh.weatherapi.networking.weathermodels.CurrentWeatherData;
 import com.akshansh.weatherapi.networking.weathermodels.WeatherForecastData;

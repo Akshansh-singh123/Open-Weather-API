@@ -1,4 +1,4 @@
-package com.akshansh.weatherapi.screens.views.precipitationitem;
+package com.akshansh.weatherapi.screens.main.precipitationitem;
 
 import android.view.LayoutInflater;
 import android.view.ViewGroup;

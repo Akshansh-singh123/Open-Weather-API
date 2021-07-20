@@ -1,4 +1,4 @@
-package com.akshansh.weatherapi.screens.views.headeritem;
+package com.akshansh.weatherapi.screens.main.headeritem;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;

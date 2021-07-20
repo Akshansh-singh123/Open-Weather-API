@@ -55,7 +55,7 @@ public class ApplicationModule {
 
     public Retrofit getCurrentWeatherRetrofitByLocation(){
         if(currentWeatherRetrofitByLocation == null){
-            currentWeatherRetrofitByCity = new Retrofit.Builder()
+            currentWeatherRetrofitByLocation = new Retrofit.Builder()
                     .baseUrl(ENDPOINT)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();

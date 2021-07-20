@@ -90,26 +90,6 @@ public class FetchWeatherService implements FetchWeatherEndpoint {
         });
     }
 
-    private void fetchCurrentWeatherByCity(String city, String units, Callback callback) {
-        OpenWeatherApi openWeatherApi = currentWeatherRetrofitByCity.create(OpenWeatherApi.class);
-        Call<CurrentWeatherData> call = openWeatherApi.getCurrentWeatherByCityName(city, Constants.API_KEY,units);
-        call.enqueue(new retrofit2.Callback<CurrentWeatherData>() {
-            @Override
-            public void onResponse(Call<CurrentWeatherData> call, Response<CurrentWeatherData> response) {
-                if(!response.isSuccessful()) {
-                    callback.OnFetchWeatherFailure();
-                    return;
-                }
-                fetchForecastByCityName(city,units,callback,response.body());
-            }
-
-            @Override
-            public void onFailure(Call<CurrentWeatherData> call, Throwable t) {
-                callback.OnFetchWeatherFailure();
-            }
-        });
-    }
-
     private void fetchForecastByLocation(double latitude, double longitude,
                                          String units, Callback callback,
                                          CurrentWeatherData currentWeatherData) {
@@ -130,6 +110,26 @@ public class FetchWeatherService implements FetchWeatherEndpoint {
 
             @Override
             public void onFailure(Call<WeatherForecastData> call, Throwable t) {
+                callback.OnFetchWeatherFailure();
+            }
+        });
+    }
+
+    private void fetchCurrentWeatherByCity(String city, String units, Callback callback) {
+        OpenWeatherApi openWeatherApi = currentWeatherRetrofitByCity.create(OpenWeatherApi.class);
+        Call<CurrentWeatherData> call = openWeatherApi.getCurrentWeatherByCityName(city, Constants.API_KEY,units);
+        call.enqueue(new retrofit2.Callback<CurrentWeatherData>() {
+            @Override
+            public void onResponse(Call<CurrentWeatherData> call, Response<CurrentWeatherData> response) {
+                if(!response.isSuccessful()) {
+                    callback.OnFetchWeatherFailure();
+                    return;
+                }
+                fetchForecastByCityName(city,units,callback,response.body());
+            }
+
+            @Override
+            public void onFailure(Call<CurrentWeatherData> call, Throwable t) {
                 callback.OnFetchWeatherFailure();
             }
         });

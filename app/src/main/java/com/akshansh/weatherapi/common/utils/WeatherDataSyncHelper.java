@@ -87,11 +87,16 @@ public class WeatherDataSyncHelper {
         Gson gson = new Gson();
         String currentWeatherJson = gson.toJson(weatherDataSynced);
         String weatherForecastJson = gson.toJson(weatherForecastDataSynced);
-        editor.putString(CURRENT_WEATHER_DATA,currentWeatherJson);
-        editor.putString(WEATHER_FORECAST_DATA,weatherForecastJson);
-        editor.putString(LATITUDE_DATA, String.valueOf(latitude));
-        editor.putString(LONGITUDE_DATA, String.valueOf(longitude));
-        editor.putString(CITY_NAME_DATA, city);
+        if(currentWeatherJson != null)
+            editor.putString(CURRENT_WEATHER_DATA,currentWeatherJson);
+        if(weatherForecastJson != null)
+            editor.putString(WEATHER_FORECAST_DATA,weatherForecastJson);
+        if(latitude != null)
+            editor.putString(LATITUDE_DATA, String.valueOf(latitude));
+        if(longitude != null)
+            editor.putString(LONGITUDE_DATA, String.valueOf(longitude));
+        if(city != null)
+            editor.putString(CITY_NAME_DATA, city);
         editor.apply();
     }
 

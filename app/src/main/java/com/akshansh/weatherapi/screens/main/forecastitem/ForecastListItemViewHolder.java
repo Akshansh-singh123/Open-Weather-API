@@ -1,4 +1,4 @@
-package com.akshansh.weatherapi.screens.views.forecastitem;
+package com.akshansh.weatherapi.screens.main.forecastitem;
 
 import androidx.recyclerview.widget.RecyclerView;
 

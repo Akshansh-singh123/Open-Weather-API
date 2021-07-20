@@ -6,6 +6,8 @@ import android.view.LayoutInflater;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.akshansh.weatherapi.common.utils.GPSActivationHelper;
+import com.akshansh.weatherapi.common.utils.GPSLocationHelper;
 import com.akshansh.weatherapi.common.utils.InternetConnectionTester;
 import com.akshansh.weatherapi.common.utils.PermissionHelper;
 import com.akshansh.weatherapi.screens.common.screensnavigator.ScreensNavigator;
@@ -23,6 +25,8 @@ public class ActivityModule {
     private final AppCompatActivity activity;
     private final ApplicationModule applicationModule;
     private PermissionHelper permissionHelper;
+    private GPSLocationHelper gpsLocationHelper;
+    private GPSActivationHelper gpsActivationHelper;
 
     public ActivityModule(ApplicationModule applicationModule, AppCompatActivity activity) {
         this.applicationModule = applicationModule;
@@ -94,5 +98,19 @@ public class ActivityModule {
 
     public InternetConnectionTester getInternetConnectionTester(){
         return new InternetConnectionTester(activity);
+    }
+
+    public GPSLocationHelper getGPSLocationHelper(){
+        if(gpsLocationHelper == null) {
+            gpsLocationHelper = new GPSLocationHelper(activity,getExecutor());
+        }
+        return gpsLocationHelper;
+    }
+
+    public GPSActivationHelper getGPSActivationHelper(){
+        if(gpsActivationHelper == null){
+            gpsActivationHelper = new GPSActivationHelper(activity);
+        }
+        return gpsActivationHelper;
     }
 }

@@ -6,8 +6,10 @@ import java.util.HashMap;
 
 public class Constants {
     public static final String ENDPOINT = "https://api.openweathermap.org/data/2.5/";
-    public static final String API_KEY = "70e0001d2e515fd84953359565e83ae9";
+    public static final String API_KEY = "86a9df1972a8040648c1cb4a6a1da9e2";
     public static final int LOCATION_REQUEST_CODE = 100;
+    public static final String METRIC = "metric";
+    public static final long LOCATION_FETCH_TIMEOUT = 60000;
     private static final HashMap<String, Integer> dayDrawables = new HashMap<>();
     private static final HashMap<String, Integer> nightDrawables = new HashMap<>();
 

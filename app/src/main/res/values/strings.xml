@@ -16,4 +16,6 @@
     <string name="snow">Snow</string>
     <string name="weather_icon">weather icon</string>
     <string name="_5_day_forecast">5 Day Forecast</string>
+    <string name="fetching_location">Fetching location</string>
+    <string name="enter_your_location">Enter your location</string>
 </resources>
