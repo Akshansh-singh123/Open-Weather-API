@@ -18,7 +18,7 @@ import com.akshansh.weatherapi.screens.common.toolbar.ToolbarViewMvc;
 import com.akshansh.weatherapi.screens.common.views.BaseObservableViewMvc;
 
 public class MainViewMvcImpl extends BaseObservableViewMvc<MainViewMvc.Listener>
-        implements MainViewMvc {
+        implements MainViewMvc,ToolbarViewMvc.Listener {
     private ActivityMainBinding binding;
     private final Toolbar toolbar;
     private final SwipeRefreshLayout swipeRefreshLayout;
@@ -48,6 +48,7 @@ public class MainViewMvcImpl extends BaseObservableViewMvc<MainViewMvc.Listener>
     public void bindView(CurrentWeatherData weatherData, WeatherForecastData weatherForecastData) {
         adapter.bindView(weatherData,weatherForecastData);
         toolbarViewMvc.setTitle(weatherData.getCityName());
+        toolbarViewMvc.registerListener(this);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -62,6 +63,7 @@ public class MainViewMvcImpl extends BaseObservableViewMvc<MainViewMvc.Listener>
     @Override
     public void clearBinding() {
         binding = null;
+        toolbarViewMvc.unregisterListener(this);
     }
 
     @Override
@@ -72,5 +74,17 @@ public class MainViewMvcImpl extends BaseObservableViewMvc<MainViewMvc.Listener>
     @Override
     public void setBackgroundImage(int resId) {
         wallpaper.setImageResource(resId);
+    }
+
+    @Override
+    public void setGPSButtonVisible(boolean visible) {
+        toolbarViewMvc.setGPSButtonVisible(visible);
+    }
+
+    @Override
+    public void OnGPSActivateButtonClicked() {
+        for(Listener listener: getListeners()){
+            listener.OnGPSActivateButtonClicked();
+        }
     }
 }

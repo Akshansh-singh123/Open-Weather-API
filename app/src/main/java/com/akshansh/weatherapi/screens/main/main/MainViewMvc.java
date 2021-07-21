@@ -7,9 +7,11 @@ import com.akshansh.weatherapi.screens.common.views.ObservableViewMvc;
 public interface MainViewMvc extends ObservableViewMvc<MainViewMvc.Listener> {
     interface Listener{
         void OnRefresh();
+        void OnGPSActivateButtonClicked();
     }
     void bindView(CurrentWeatherData weatherData, WeatherForecastData weatherForecastData);
     void clearBinding();
     void stopRefreshing();
     void setBackgroundImage(int resId);
+    void setGPSButtonVisible(boolean visible);
 }

@@ -18,4 +18,5 @@
     <string name="_5_day_forecast">5 Day Forecast</string>
     <string name="fetching_location">Fetching location</string>
     <string name="enter_your_location">Enter your location</string>
+    <string name="activate_location_services">Activate Location Services</string>
 </resources>

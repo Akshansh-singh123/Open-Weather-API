@@ -1,11 +1,13 @@
 package com.akshansh.weatherapi.screens.main.main;
 
 import android.Manifest;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
+import android.os.Handler;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.WorkerThread;
 
 import com.akshansh.weatherapi.common.Constants;
@@ -35,6 +37,7 @@ public class MainActivity extends BaseActivity implements MainViewMvc.Listener,
     private GPSActivationHelper gpsActivationHelper;
     private GPSLocationHelper gpsLocationHelper;
     private PermissionHelper permissionHelper;
+    private Handler uiThread;
 
     private boolean initialized = false;
 
@@ -52,6 +55,7 @@ public class MainActivity extends BaseActivity implements MainViewMvc.Listener,
         gpsActivationHelper = getInjector().getGPSActivationHelper();
         gpsLocationHelper = getInjector().getGPSLocationHelper();
         permissionHelper = getInjector().getPermissionHelper();
+        uiThread = getInjector().getUiThread();
     }
 
     @Override
@@ -92,8 +96,19 @@ public class MainActivity extends BaseActivity implements MainViewMvc.Listener,
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        gpsActivationHelper.onActivityResult(requestCode,resultCode);
+    }
+
+    @Override
     public void OnRefresh() {
         checkPermissionAndFetchLocation();
+    }
+
+    @Override
+    public void OnGPSActivateButtonClicked() {
+        checkPermissionAndActivateGPS();
     }
 
     @Override
@@ -130,29 +145,31 @@ public class MainActivity extends BaseActivity implements MainViewMvc.Listener,
 
     @Override
     public void OnLocationFetchSuccessful(double latitude, double longitude) {
+        viewMvc.setGPSButtonVisible(false);
         fetchWeatherUseCase.fetchWeatherForecastByLocation(latitude,longitude,Constants.METRIC);
     }
 
+    @WorkerThread
     @Override
     public void OnLocationFetchFailure() {
-        fetchWeatherUpdatesByCachedInputs();
+        uiThread.post(this::fetchWeatherUpdatesByCachedInputs);
     }
 
     @Override
     public void OnGPSNotAvailable() {
-        // TODO: 20-07-2021 Display Enable GPS button
+        viewMvc.setGPSButtonVisible(true);
         fetchWeatherUpdatesByCachedInputs();
     }
 
     @Override
     public void OnGPSActivated() {
+        viewMvc.setGPSButtonVisible(false);
         checkPermissionAndFetchLocation();
     }
 
-    @WorkerThread
     @Override
     public void OnGPSActivationFailure() {
-
+        viewMvc.setGPSButtonVisible(true);
     }
 
     @Override
@@ -160,6 +177,9 @@ public class MainActivity extends BaseActivity implements MainViewMvc.Listener,
         if(permission.equals(Manifest.permission.ACCESS_FINE_LOCATION)){
             if(requestCode == Constants.LOCATION_REQUEST_CODE){
                 gpsLocationHelper.getLocationCoordinates();
+            }else if(requestCode == Constants.GPS_ACTIVATION_REQUEST_CODE){
+                gpsActivationHelper.enableGPS();
+                viewMvc.setGPSButtonVisible(false);
             }
         }
     }
@@ -167,11 +187,17 @@ public class MainActivity extends BaseActivity implements MainViewMvc.Listener,
     @Override
     public void onPermissionDenied(String permission, int requestCode) {
         fetchWeatherUpdatesByCachedInputs();
+        if(requestCode == Constants.GPS_ACTIVATION_REQUEST_CODE){
+            viewMvc.setGPSButtonVisible(true);
+        }
     }
 
     @Override
     public void onPermissionDeniedPermanent(String permission, int requestCode) {
         fetchWeatherUpdatesByCachedInputs();
+        if(requestCode == Constants.GPS_ACTIVATION_REQUEST_CODE){
+            viewMvc.setGPSButtonVisible(false);
+        }
     }
 
     private void checkPermissionAndFetchLocation() {
@@ -195,6 +221,17 @@ public class MainActivity extends BaseActivity implements MainViewMvc.Listener,
             fetchWeatherUseCase.fetchWeatherForecastByCityName(city,Constants.METRIC);
         }else{
             throw new RuntimeException("invalid state of sync");
+        }
+    }
+
+    private void checkPermissionAndActivateGPS() {
+        viewMvc.setGPSButtonVisible(false);
+        if (permissionHelper.isPermissionGranted(Manifest.permission.ACCESS_FINE_LOCATION)) {
+            gpsActivationHelper.enableGPS();
+        } else {
+            permissionHelper.requestPermission(new String[]
+                            {Manifest.permission.ACCESS_FINE_LOCATION},
+                    Constants.GPS_ACTIVATION_REQUEST_CODE);
         }
     }
 }
