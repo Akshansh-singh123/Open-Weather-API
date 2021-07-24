@@ -26,6 +26,7 @@ public class MainAdapter extends RecyclerView.Adapter {
     private CurrentWeatherData weatherData;
     private WeatherForecastData weatherForecastData;
     private final ViewMvcFactory viewMvcFactory;
+    private boolean progressBarVisible = false;
 
     public MainAdapter(ViewMvcFactory viewMvcFactory) {
         this.viewMvcFactory = viewMvcFactory;
@@ -100,6 +101,7 @@ public class MainAdapter extends RecyclerView.Adapter {
                 ForecastListItemViewHolder forecastListItemViewHolder =
                         (ForecastListItemViewHolder)holder;
                 forecastListItemViewHolder.viewMvc.bindView(weatherForecastData);
+                forecastListItemViewHolder.viewMvc.setProgressBarVisible(progressBarVisible);
                 break;
             default:
                 throw new RuntimeException("invalid position");
@@ -109,5 +111,10 @@ public class MainAdapter extends RecyclerView.Adapter {
     @Override
     public int getItemCount() {
         return 4;
+    }
+
+    public void setProgressBarVisible(boolean visible) {
+        progressBarVisible = visible;
+        notifyItemChanged(3);
     }
 }

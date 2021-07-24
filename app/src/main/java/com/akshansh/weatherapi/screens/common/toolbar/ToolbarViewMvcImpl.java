@@ -1,8 +1,10 @@
 package com.akshansh.weatherapi.screens.common.toolbar;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -21,6 +23,7 @@ public class ToolbarViewMvcImpl extends BaseObservableViewMvc<ToolbarViewMvc.Lis
     private final TextView lastUpdateTimeTextView;
     private final SimpleDateFormat timeFormat;
     private final TextView activateGPSButton;
+    private final ProgressBar progressBar;
 
     public ToolbarViewMvcImpl(@NonNull LayoutInflater inflater, ViewGroup parent) {
         binding = MainToolbarBinding.inflate(inflater,parent,false);
@@ -28,6 +31,7 @@ public class ToolbarViewMvcImpl extends BaseObservableViewMvc<ToolbarViewMvc.Lis
         titleTextView = binding.titleTextView;
         lastUpdateTimeTextView = binding.lastUpdateTimeText;
         activateGPSButton = binding.activateGpsButton;
+        progressBar = binding.progressBar;
         timeFormat = new SimpleDateFormat("dd-MM-yy hh:mm a",Locale.ENGLISH);
         activateGPSButton.setOnClickListener(view->{
             for(Listener listener: getListeners()){
@@ -54,6 +58,17 @@ public class ToolbarViewMvcImpl extends BaseObservableViewMvc<ToolbarViewMvc.Lis
             activateGPSButton.setVisibility(View.VISIBLE);
         } else {
             activateGPSButton.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public void setProgressBarVisible(boolean visible) {
+        if(visible){
+            progressBar.setVisibility(View.VISIBLE);
+            lastUpdateTimeTextView.setVisibility(View.INVISIBLE);
+        }else{
+            progressBar.setVisibility(View.INVISIBLE);
+            lastUpdateTimeTextView.setVisibility(View.VISIBLE);
         }
     }
 }

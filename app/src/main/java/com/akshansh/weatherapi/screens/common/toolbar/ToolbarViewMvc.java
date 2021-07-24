@@ -10,4 +10,5 @@ public interface ToolbarViewMvc extends ObservableViewMvc<ToolbarViewMvc.Listene
     void setTitle(String title);
     void setLastUpdatedTime(long lastUpdatedTimestamp);
     void setGPSButtonVisible(boolean visible);
+    void setProgressBarVisible(boolean visible);
 }

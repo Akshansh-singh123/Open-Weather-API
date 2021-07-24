@@ -68,8 +68,7 @@ public class MainActivity extends BaseActivity implements MainViewMvc.Listener,
         gpsLocationHelper.registerListener(this);
         gpsActivationHelper.registerListener(this);
         if(!initialized) {
-            OnFetchWeatherSuccessful(weatherDataSyncHelper.getWeatherDataSynced(),
-                    weatherDataSyncHelper.getWeatherForecastDataSynced());
+            fetchWeatherUpdatesByCachedInputs();
             checkPermissionAndFetchLocation();
             initialized = true;
         }
@@ -114,6 +113,7 @@ public class MainActivity extends BaseActivity implements MainViewMvc.Listener,
     @Override
     public void OnFetchWeatherSuccessful(CurrentWeatherData weatherData,
                                          WeatherForecastData weatherForecastData) {
+        viewMvc.setProgressBarVisible(false);
         int resId = imageLoaderHelper.getBackgroundDrawableResource(weatherData);
         paletteHelper.getPaletteColor(resId);
         viewMvc.setBackgroundImage(resId);
@@ -123,12 +123,14 @@ public class MainActivity extends BaseActivity implements MainViewMvc.Listener,
 
     @Override
     public void OnFetchWeatherFailure() {
+        viewMvc.setProgressBarVisible(false);
         toastHelper.makeToast("Could not fetch the latest weather");
         viewMvc.stopRefreshing();
     }
 
     @Override
     public void OnFetchWeatherNetworkError() {
+        viewMvc.setProgressBarVisible(false);
         toastHelper.makeToast("Could not connect to the internet");
         viewMvc.stopRefreshing();
     }
@@ -152,12 +154,14 @@ public class MainActivity extends BaseActivity implements MainViewMvc.Listener,
     @WorkerThread
     @Override
     public void OnLocationFetchFailure() {
+        viewMvc.setProgressBarVisible(false);
         uiThread.post(this::fetchWeatherUpdatesByCachedInputs);
     }
 
     @Override
     public void OnGPSNotAvailable() {
         viewMvc.setGPSButtonVisible(true);
+        viewMvc.setProgressBarVisible(false);
         fetchWeatherUpdatesByCachedInputs();
     }
 
@@ -176,6 +180,7 @@ public class MainActivity extends BaseActivity implements MainViewMvc.Listener,
     public void onPermissionGranted(String permission, int requestCode) {
         if(permission.equals(Manifest.permission.ACCESS_FINE_LOCATION)){
             if(requestCode == Constants.LOCATION_REQUEST_CODE){
+                viewMvc.setProgressBarVisible(true);
                 gpsLocationHelper.getLocationCoordinates();
             }else if(requestCode == Constants.GPS_ACTIVATION_REQUEST_CODE){
                 gpsActivationHelper.enableGPS();
@@ -202,6 +207,7 @@ public class MainActivity extends BaseActivity implements MainViewMvc.Listener,
 
     private void checkPermissionAndFetchLocation() {
         if (permissionHelper.isPermissionGranted(Manifest.permission.ACCESS_FINE_LOCATION)){
+            viewMvc.setProgressBarVisible(true);
             gpsLocationHelper.getLocationCoordinates();
         }else{
             permissionHelper.requestPermission(new String[]
@@ -211,6 +217,7 @@ public class MainActivity extends BaseActivity implements MainViewMvc.Listener,
     }
 
     private void fetchWeatherUpdatesByCachedInputs(){
+        viewMvc.setProgressBarVisible(true);
         if(weatherDataSyncHelper.getLatitude() != null &&
                 weatherDataSyncHelper.getLongitude() != null){
             double latitude = weatherDataSyncHelper.getLatitude();

@@ -14,4 +14,5 @@ public interface MainViewMvc extends ObservableViewMvc<MainViewMvc.Listener> {
     void stopRefreshing();
     void setBackgroundImage(int resId);
     void setGPSButtonVisible(boolean visible);
+    void setProgressBarVisible(boolean visible);
 }

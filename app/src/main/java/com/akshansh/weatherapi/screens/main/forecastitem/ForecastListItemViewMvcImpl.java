@@ -3,8 +3,11 @@ package com.akshansh.weatherapi.screens.main.forecastitem;
 import android.os.Handler;
 import android.os.Looper;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -42,6 +45,8 @@ public class ForecastListItemViewMvcImpl extends BaseViewMvc implements
     private final TextView windSpeedTextView;
     private final TextView temperatureUnitTextView;
     private final RecyclerView recyclerView;
+    private final View container;
+    private final FrameLayout progressBar;
     private final SimpleDateFormat dateFormat;
     private final TreeMap<String, List<ForecastData>> forecastDataByDates;
     private final DaySelectListItemAdapter adapter;
@@ -55,6 +60,7 @@ public class ForecastListItemViewMvcImpl extends BaseViewMvc implements
         binding = WeatherForecastListItemBinding.inflate(inflater,parent,false);
         setRootView(binding.getRoot());
 
+        container = binding.container;
         hourSlider = binding.hourlySlider;
         weatherDescriptionTextView = binding.weatherDescriptionText;
         mainTemperatureTextView = binding.mainTemperature;
@@ -64,6 +70,7 @@ public class ForecastListItemViewMvcImpl extends BaseViewMvc implements
         windSpeedTextView = binding.dayWindSpeed;
         temperatureUnitTextView = binding.temperatureUnitText;
         recyclerView = binding.recyclerView;
+        progressBar = binding.progressBar;
 
         adapter = new DaySelectListItemAdapter(viewMvcFactory,this);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
@@ -81,6 +88,15 @@ public class ForecastListItemViewMvcImpl extends BaseViewMvc implements
         hashForecastDataByDate(weatherForecastData.getForecastData());
         temperatureUnitTextView.setText(String.format(Locale.ENGLISH,"%sC",
                 getString(R.string.degrees_symbol)));
+    }
+
+    @Override
+    public void setProgressBarVisible(boolean visible) {
+        if(visible){
+            progressBar.setVisibility(View.VISIBLE);
+        }else{
+            progressBar.setVisibility(View.INVISIBLE);
+        }
     }
 
     @Override

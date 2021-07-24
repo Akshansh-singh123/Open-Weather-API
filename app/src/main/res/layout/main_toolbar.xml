@@ -45,6 +45,16 @@
         app:layout_constraintTop_toBottomOf="@+id/title_textView"
         tools:text="Last updated on: 17-06-21 05:39 pm" />
 
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="invisible"
+        android:indeterminateTint="@color/white"
+        app:layout_constraintBottom_toBottomOf="@+id/last_update_time_text"
+        app:layout_constraintEnd_toEndOf="@+id/last_update_time_text"
+        app:layout_constraintStart_toStartOf="@+id/last_update_time_text"
+        app:layout_constraintTop_toTopOf="@+id/last_update_time_text" />
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/activate_gps_button"
         android:layout_width="wrap_content"

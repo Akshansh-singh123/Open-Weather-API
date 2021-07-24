@@ -1,6 +1,7 @@
 package com.akshansh.weatherapi.screens.main.main;
 
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -79,6 +80,12 @@ public class MainViewMvcImpl extends BaseObservableViewMvc<MainViewMvc.Listener>
     @Override
     public void setGPSButtonVisible(boolean visible) {
         toolbarViewMvc.setGPSButtonVisible(visible);
+    }
+
+    @Override
+    public void setProgressBarVisible(boolean visible) {
+        toolbarViewMvc.setProgressBarVisible(visible);
+        adapter.setProgressBarVisible(visible);
     }
 
     @Override
