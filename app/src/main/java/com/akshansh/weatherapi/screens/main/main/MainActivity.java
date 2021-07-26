@@ -11,6 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.WorkerThread;
 
 import com.akshansh.weatherapi.common.Constants;
+import com.akshansh.weatherapi.common.ViewMvcFactory;
 import com.akshansh.weatherapi.common.graphics.ImageLoaderHelper;
 import com.akshansh.weatherapi.common.graphics.PaletteHelper;
 import com.akshansh.weatherapi.common.graphics.WindowStatusBarHelper;
@@ -24,38 +25,32 @@ import com.akshansh.weatherapi.screens.common.BaseActivity;
 import com.akshansh.weatherapi.screens.common.toast.ToastHelper;
 import com.akshansh.weatherapi.weather.FetchWeatherUseCase;
 
+import javax.inject.Inject;
+
 public class MainActivity extends BaseActivity implements MainViewMvc.Listener,
         FetchWeatherUseCase.Listener, PaletteHelper.Listener, GPSLocationHelper.Listener,
         GPSActivationHelper.Listener, PermissionHelper.Listener {
-    private MainViewMvc viewMvc;
-    private FetchWeatherUseCase fetchWeatherUseCase;
-    private ToastHelper toastHelper;
-    private ImageLoaderHelper imageLoaderHelper;
-    private PaletteHelper paletteHelper;
-    private WindowStatusBarHelper windowStatusBarHelper;
-    private WeatherDataSyncHelper weatherDataSyncHelper;
-    private GPSActivationHelper gpsActivationHelper;
-    private GPSLocationHelper gpsLocationHelper;
-    private PermissionHelper permissionHelper;
-    private Handler uiThread;
+    @Inject public ViewMvcFactory viewMvcFactory;
+    @Inject public FetchWeatherUseCase fetchWeatherUseCase;
+    @Inject public ToastHelper toastHelper;
+    @Inject public ImageLoaderHelper imageLoaderHelper;
+    @Inject public PaletteHelper paletteHelper;
+    @Inject public WindowStatusBarHelper windowStatusBarHelper;
+    @Inject public WeatherDataSyncHelper weatherDataSyncHelper;
+    @Inject public GPSActivationHelper gpsActivationHelper;
+    @Inject public GPSLocationHelper gpsLocationHelper;
+    @Inject public PermissionHelper permissionHelper;
+    @Inject public Handler uiThread;
 
     private boolean initialized = false;
+    private MainViewMvc viewMvc;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        viewMvc = getInjector().getViewMvcFactory().getMainViewMvc(null);
+        getInjector().inject(this);
+        viewMvc = viewMvcFactory.getMainViewMvc(null);
         setContentView(viewMvc.getRootView());
-        fetchWeatherUseCase = getInjector().getFetchWeatherUseCase();
-        toastHelper = getInjector().getToastHelper();
-        imageLoaderHelper = getInjector().getImageLoaderHelper();
-        paletteHelper = getInjector().getPaletteHelper();
-        windowStatusBarHelper = getInjector().getWindowStatusBarHelper();
-        weatherDataSyncHelper = getInjector().getWeatherDataSyncHelper();
-        gpsActivationHelper = getInjector().getGPSActivationHelper();
-        gpsLocationHelper = getInjector().getGPSLocationHelper();
-        permissionHelper = getInjector().getPermissionHelper();
-        uiThread = getInjector().getUiThread();
     }
 
     @Override

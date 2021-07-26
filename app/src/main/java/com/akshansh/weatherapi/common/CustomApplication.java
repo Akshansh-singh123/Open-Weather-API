@@ -2,20 +2,25 @@ package com.akshansh.weatherapi.common;
 
 import android.app.Application;
 
-import com.akshansh.weatherapi.common.dependecyinjection.ApplicationModule;
+import com.akshansh.weatherapi.common.dependecyinjection.application.ApplicationComponent;
+import com.akshansh.weatherapi.common.dependecyinjection.application.ApplicationModule;
+import com.akshansh.weatherapi.common.dependecyinjection.application.DaggerApplicationComponent;
 
-import retrofit2.Retrofit;
+import dagger.android.DaggerApplication;
 
 public class CustomApplication extends Application {
-    private ApplicationModule applicationModule;
+    private ApplicationComponent applicationComponent;
 
     @Override
     public void onCreate() {
         super.onCreate();
-        applicationModule = new ApplicationModule(this);
+        applicationComponent = DaggerApplicationComponent
+                                .builder()
+                                .applicationModule(new ApplicationModule(this))
+                                .build();
     }
 
-    public ApplicationModule getApplicationModule() {
-        return applicationModule;
+    public ApplicationComponent getApplicationComponent() {
+        return applicationComponent;
     }
 }

@@ -3,24 +3,28 @@ package com.akshansh.weatherapi.screens.common;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.akshansh.weatherapi.common.CustomApplication;
-import com.akshansh.weatherapi.common.dependecyinjection.ActivityModule;
-import com.akshansh.weatherapi.common.dependecyinjection.ControllerModule;
+import com.akshansh.weatherapi.common.dependecyinjection.activity.ActivityComponent;
+import com.akshansh.weatherapi.common.dependecyinjection.activity.ActivityModule;
+import com.akshansh.weatherapi.common.dependecyinjection.controller.ControllerComponent;
+import com.akshansh.weatherapi.common.dependecyinjection.controller.ControllerModule;
 
 public class BaseActivity extends AppCompatActivity {
-    private ControllerModule injector;
-    private ActivityModule activityModule;
+    private ControllerComponent injector;
+    private ActivityComponent activityComponent;
 
-    public ActivityModule getActivityModule(){
-        if(activityModule == null){
-            activityModule = new ActivityModule(((CustomApplication)getApplication())
-                    .getApplicationModule(),this);
+    public ActivityComponent getActivityComponent(){
+        if(activityComponent == null){
+            activityComponent = ((CustomApplication)getApplication())
+                    .getApplicationComponent()
+                    .newActivityComponent(new ActivityModule(this));
         }
-        return activityModule;
+        return activityComponent;
     }
 
-    protected ControllerModule getInjector(){
+    protected ControllerComponent getInjector(){
         if(injector == null){
-            injector = new ControllerModule(getActivityModule());
+            injector = getActivityComponent()
+                    .newControllerComponent(new ControllerModule());
         }
         return injector;
     }

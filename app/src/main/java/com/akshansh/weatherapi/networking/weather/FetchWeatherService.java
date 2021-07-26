@@ -13,23 +13,14 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 public class FetchWeatherService implements FetchWeatherEndpoint {
-    private final Retrofit currentWeatherRetrofitByCity;
-    private final Retrofit weatherForecastRetrofitByCity;
-    private final Retrofit currentWeatherRetrofitByLocation;
-    private final Retrofit weatherForecastRetrofitByLocation;
+    private OpenWeatherApi openWeatherApi;
     private final WeatherDataSyncHelper weatherDataSyncHelper;
     private final InternetConnectionTester internetConnectionTester;
 
-    public FetchWeatherService(Retrofit currentWeatherRetrofitByCity,
-                               Retrofit weatherForecastRetrofitByCity,
-                               Retrofit currentWeatherRetrofitByLocation,
-                               Retrofit weatherForecastRetrofitByLocation,
+    public FetchWeatherService(OpenWeatherApi openWeatherApi,
                                WeatherDataSyncHelper weatherDataSyncHelper,
                                InternetConnectionTester internetConnectionTester) {
-        this.currentWeatherRetrofitByCity = currentWeatherRetrofitByCity;
-        this.weatherForecastRetrofitByCity = weatherForecastRetrofitByCity;
-        this.currentWeatherRetrofitByLocation = currentWeatherRetrofitByLocation;
-        this.weatherForecastRetrofitByLocation = weatherForecastRetrofitByLocation;
+        this.openWeatherApi = openWeatherApi;
         this.weatherDataSyncHelper = weatherDataSyncHelper;
         this.internetConnectionTester = internetConnectionTester;
     }
@@ -67,7 +58,6 @@ public class FetchWeatherService implements FetchWeatherEndpoint {
 
     private void fetchCurrentWeatherByLocation(double latitude, double longitude,
                                                String units, Callback callback) {
-        OpenWeatherApi openWeatherApi = currentWeatherRetrofitByLocation.create(OpenWeatherApi.class);
         Call<CurrentWeatherData> call = openWeatherApi.getCurrentWeatherByLocation(
                 String.valueOf(latitude),
                 String.valueOf(longitude),
@@ -93,8 +83,6 @@ public class FetchWeatherService implements FetchWeatherEndpoint {
     private void fetchForecastByLocation(double latitude, double longitude,
                                          String units, Callback callback,
                                          CurrentWeatherData currentWeatherData) {
-        OpenWeatherApi openWeatherApi = weatherForecastRetrofitByLocation
-                .create(OpenWeatherApi.class);
         Call<WeatherForecastData> call = openWeatherApi
                 .getWeatherForecastByLocation(String.valueOf(latitude),
                         String.valueOf(longitude),
@@ -116,7 +104,6 @@ public class FetchWeatherService implements FetchWeatherEndpoint {
     }
 
     private void fetchCurrentWeatherByCity(String city, String units, Callback callback) {
-        OpenWeatherApi openWeatherApi = currentWeatherRetrofitByCity.create(OpenWeatherApi.class);
         Call<CurrentWeatherData> call = openWeatherApi.getCurrentWeatherByCityName(city, Constants.API_KEY,units);
         call.enqueue(new retrofit2.Callback<CurrentWeatherData>() {
             @Override
@@ -137,7 +124,6 @@ public class FetchWeatherService implements FetchWeatherEndpoint {
 
     private void fetchForecastByCityName(String city, String units, Callback callback,
                                          CurrentWeatherData currentWeatherData) {
-        OpenWeatherApi openWeatherApi = weatherForecastRetrofitByCity.create(OpenWeatherApi.class);
         Call<WeatherForecastData> call = openWeatherApi.getWeatherForecastByCityName(city,Constants.API_KEY,units);
         call.enqueue(new retrofit2.Callback<WeatherForecastData>() {
             @Override

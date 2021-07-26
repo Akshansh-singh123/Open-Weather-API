@@ -23,32 +23,26 @@ import com.akshansh.weatherapi.screens.common.BaseActivity;
 import com.akshansh.weatherapi.screens.common.toast.ToastHelper;
 import com.akshansh.weatherapi.weather.FetchWeatherUseCase;
 
+import javax.inject.Inject;
+
 public class SyncActivity extends BaseActivity implements FetchWeatherUseCase.Listener,
         GPSActivationHelper.Listener, GPSLocationHelper.Listener, PermissionHelper.Listener {
     private ActivitySyncBinding binding;
-    private FetchWeatherUseCase fetchWeatherUseCase;
-    private ToastHelper toastHelper;
-    private WeatherDataSyncHelper weatherDataSyncHelper;
-    private ScreensNavigator screensNavigator;
-    private PermissionHelper permissionHelper;
-    private GPSLocationHelper gpsLocationHelper;
-    private GPSActivationHelper gpsActivationHelper;
-    private Handler uiThread;
+    @Inject public FetchWeatherUseCase fetchWeatherUseCase;
+    @Inject public ToastHelper toastHelper;
+    @Inject public WeatherDataSyncHelper weatherDataSyncHelper;
+    @Inject public ScreensNavigator screensNavigator;
+    @Inject public PermissionHelper permissionHelper;
+    @Inject public GPSLocationHelper gpsLocationHelper;
+    @Inject public GPSActivationHelper gpsActivationHelper;
+    @Inject public Handler uiThread;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivitySyncBinding.inflate(getLayoutInflater(),null,false);
         setContentView(binding.getRoot());
-
-        fetchWeatherUseCase = getInjector().getFetchWeatherUseCase();
-        weatherDataSyncHelper = getInjector().getWeatherDataSyncHelper();
-        toastHelper = getInjector().getToastHelper();
-        screensNavigator = getInjector().getScreensNavigator();
-        permissionHelper = getInjector().getPermissionHelper();
-        gpsLocationHelper = getInjector().getGPSLocationHelper();
-        gpsActivationHelper = getInjector().getGPSActivationHelper();
-        uiThread = getInjector().getUiThread();
+        getInjector().inject(this);
     }
 
     @Override
