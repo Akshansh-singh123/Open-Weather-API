@@ -4,6 +4,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -24,6 +25,7 @@ public class ToolbarViewMvcImpl extends BaseObservableViewMvc<ToolbarViewMvc.Lis
     private final SimpleDateFormat timeFormat;
     private final TextView activateGPSButton;
     private final ProgressBar progressBar;
+    private final ImageButton editLocationButton;
 
     public ToolbarViewMvcImpl(@NonNull LayoutInflater inflater, ViewGroup parent) {
         binding = MainToolbarBinding.inflate(inflater,parent,false);
@@ -32,6 +34,7 @@ public class ToolbarViewMvcImpl extends BaseObservableViewMvc<ToolbarViewMvc.Lis
         lastUpdateTimeTextView = binding.lastUpdateTimeText;
         activateGPSButton = binding.activateGpsButton;
         progressBar = binding.progressBar;
+        editLocationButton = binding.editLocationButton;
         timeFormat = new SimpleDateFormat("dd-MM-yy hh:mm a",Locale.ENGLISH);
         activateGPSButton.setOnClickListener(view->{
             for(Listener listener: getListeners()){
@@ -70,5 +73,21 @@ public class ToolbarViewMvcImpl extends BaseObservableViewMvc<ToolbarViewMvc.Lis
             progressBar.setVisibility(View.INVISIBLE);
             lastUpdateTimeTextView.setVisibility(View.VISIBLE);
         }
+    }
+
+    @Override
+    public void disableEditCityButton() {
+        editLocationButton.setVisibility(View.GONE);
+        editLocationButton.setOnClickListener(null);
+    }
+
+    @Override
+    public void enableEditCityButton() {
+        editLocationButton.setVisibility(View.VISIBLE);
+        editLocationButton.setOnClickListener((view)->{
+            for(Listener listener: getListeners()){
+                listener.OnEditCityButtonClicked();
+            }
+        });
     }
 }

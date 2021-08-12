@@ -8,6 +8,7 @@ public interface MainViewMvc extends ObservableViewMvc<MainViewMvc.Listener> {
     interface Listener{
         void OnRefresh();
         void OnGPSActivateButtonClicked();
+        void OnEditCityButtonClicked();
     }
     void bindView(CurrentWeatherData weatherData, WeatherForecastData weatherForecastData);
     void clearBinding();
@@ -15,4 +16,6 @@ public interface MainViewMvc extends ObservableViewMvc<MainViewMvc.Listener> {
     void setBackgroundImage(int resId);
     void setGPSButtonVisible(boolean visible);
     void setProgressBarVisible(boolean visible);
+    void disableEditCityButton();
+    void enableEditCityButton();
 }

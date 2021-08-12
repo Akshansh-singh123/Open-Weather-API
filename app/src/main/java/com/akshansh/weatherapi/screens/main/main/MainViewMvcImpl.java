@@ -1,5 +1,6 @@
 package com.akshansh.weatherapi.screens.main.main;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -89,9 +90,26 @@ public class MainViewMvcImpl extends BaseObservableViewMvc<MainViewMvc.Listener>
     }
 
     @Override
+    public void disableEditCityButton() {
+        toolbarViewMvc.disableEditCityButton();
+    }
+
+    @Override
+    public void enableEditCityButton() {
+        toolbarViewMvc.enableEditCityButton();
+    }
+
+    @Override
     public void OnGPSActivateButtonClicked() {
         for(Listener listener: getListeners()){
             listener.OnGPSActivateButtonClicked();
+        }
+    }
+
+    @Override
+    public void OnEditCityButtonClicked() {
+        for(Listener listener: getListeners()){
+            listener.OnEditCityButtonClicked();
         }
     }
 }

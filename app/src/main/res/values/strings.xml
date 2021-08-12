@@ -19,4 +19,5 @@
     <string name="fetching_location">Fetching location</string>
     <string name="enter_your_location">Enter your location</string>
     <string name="activate_location_services">Activate Location Services</string>
+    <string name="edit_city_button">Edit City Button</string>
 </resources>

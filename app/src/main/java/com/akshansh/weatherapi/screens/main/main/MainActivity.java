@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -22,6 +23,7 @@ import com.akshansh.weatherapi.common.utils.WeatherDataSyncHelper;
 import com.akshansh.weatherapi.networking.weathermodels.CurrentWeatherData;
 import com.akshansh.weatherapi.networking.weathermodels.WeatherForecastData;
 import com.akshansh.weatherapi.screens.common.BaseActivity;
+import com.akshansh.weatherapi.screens.common.screensnavigator.ScreensNavigator;
 import com.akshansh.weatherapi.screens.common.toast.ToastHelper;
 import com.akshansh.weatherapi.weather.FetchWeatherUseCase;
 
@@ -41,6 +43,7 @@ public class MainActivity extends BaseActivity implements MainViewMvc.Listener,
     @Inject public GPSLocationHelper gpsLocationHelper;
     @Inject public PermissionHelper permissionHelper;
     @Inject public Handler uiThread;
+    @Inject public ScreensNavigator screensNavigator;
 
     private boolean initialized = false;
     private MainViewMvc viewMvc;
@@ -103,6 +106,11 @@ public class MainActivity extends BaseActivity implements MainViewMvc.Listener,
     @Override
     public void OnGPSActivateButtonClicked() {
         checkPermissionAndActivateGPS();
+    }
+
+    @Override
+    public void OnEditCityButtonClicked() {
+        screensNavigator.toCitySelectActivity();
     }
 
     @Override
@@ -174,6 +182,7 @@ public class MainActivity extends BaseActivity implements MainViewMvc.Listener,
     @Override
     public void onPermissionGranted(String permission, int requestCode) {
         if(permission.equals(Manifest.permission.ACCESS_FINE_LOCATION)){
+            viewMvc.disableEditCityButton();
             if(requestCode == Constants.LOCATION_REQUEST_CODE){
                 viewMvc.setProgressBarVisible(true);
                 gpsLocationHelper.getLocationCoordinates();
@@ -194,6 +203,7 @@ public class MainActivity extends BaseActivity implements MainViewMvc.Listener,
 
     @Override
     public void onPermissionDeniedPermanent(String permission, int requestCode) {
+        viewMvc.enableEditCityButton();
         fetchWeatherUpdatesByCachedInputs();
         if(requestCode == Constants.GPS_ACTIVATION_REQUEST_CODE){
             viewMvc.setGPSButtonVisible(false);
@@ -203,6 +213,7 @@ public class MainActivity extends BaseActivity implements MainViewMvc.Listener,
     private void checkPermissionAndFetchLocation() {
         if (permissionHelper.isPermissionGranted(Manifest.permission.ACCESS_FINE_LOCATION)){
             viewMvc.setProgressBarVisible(true);
+            viewMvc.disableEditCityButton();
             gpsLocationHelper.getLocationCoordinates();
         }else{
             permissionHelper.requestPermission(new String[]
@@ -221,6 +232,7 @@ public class MainActivity extends BaseActivity implements MainViewMvc.Listener,
         }else if(weatherDataSyncHelper.getCity() != null){
             String city = weatherDataSyncHelper.getCity();
             fetchWeatherUseCase.fetchWeatherForecastByCityName(city,Constants.METRIC);
+            viewMvc.enableEditCityButton();
         }else{
             throw new RuntimeException("invalid state of sync");
         }
@@ -230,6 +242,7 @@ public class MainActivity extends BaseActivity implements MainViewMvc.Listener,
         viewMvc.setGPSButtonVisible(false);
         if (permissionHelper.isPermissionGranted(Manifest.permission.ACCESS_FINE_LOCATION)) {
             gpsActivationHelper.enableGPS();
+            viewMvc.disableEditCityButton();
         } else {
             permissionHelper.requestPermission(new String[]
                             {Manifest.permission.ACCESS_FINE_LOCATION},

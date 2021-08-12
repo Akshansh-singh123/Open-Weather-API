@@ -13,7 +13,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 public class FetchWeatherService implements FetchWeatherEndpoint {
-    private OpenWeatherApi openWeatherApi;
+    private final OpenWeatherApi openWeatherApi;
     private final WeatherDataSyncHelper weatherDataSyncHelper;
     private final InternetConnectionTester internetConnectionTester;
 

@@ -20,6 +20,7 @@ public class Constants {
         dayDrawables.put("rain",R.drawable.day_rainy);
         dayDrawables.put("snow",R.drawable.day_snow);
         dayDrawables.put("atmosphere",R.drawable.day_atmosphere);
+        dayDrawables.put("mist",R.drawable.day_atmosphere);
         dayDrawables.put("haze",R.drawable.day_atmosphere);
         dayDrawables.put("clear",R.drawable.day_clear);
         dayDrawables.put("clouds",R.drawable.day_cloudy);
@@ -35,6 +36,7 @@ public class Constants {
         nightDrawables.put("rain",R.drawable.night_rainy);
         nightDrawables.put("snow",R.drawable.night_snow);
         nightDrawables.put("atmosphere",R.drawable.night_atmosphere);
+        nightDrawables.put("mist",R.drawable.night_atmosphere);
         nightDrawables.put("haze",R.drawable.night_atmosphere);
         nightDrawables.put("clear",R.drawable.night_clear);
         nightDrawables.put("clouds",R.drawable.night_cloudy);

@@ -27,6 +27,5 @@ public class ScreensNavigator {
 
     public void toCitySelectActivity() {
         activity.startActivity(new Intent(activity, SelectCityActivity.class));
-        activity.finish();
     }
 }
