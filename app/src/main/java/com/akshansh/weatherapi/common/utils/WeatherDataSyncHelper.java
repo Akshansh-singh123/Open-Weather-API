@@ -123,7 +123,9 @@ public class WeatherDataSyncHelper {
         if(storedLongitude != null) {
             longitude = storedLongitude.equals("")?null:Double.parseDouble(storedLongitude);
         }
-        city = storedCity.equals("")?null:storedCity;
+        if(storedCity != null) {
+            city = storedCity.equals("") ? null : storedCity;
+        }
     }
 
     public void clearLocalWeatherData(){

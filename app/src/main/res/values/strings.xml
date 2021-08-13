@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Weather API</string>
+    <string name="app_name">Weather</string>
     <string name="wallpaper">Wallpaper</string>
     <string name="degrees_symbol">°</string>
     <string name="feels_like">Feels like</string>

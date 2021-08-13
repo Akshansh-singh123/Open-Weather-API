@@ -77,6 +77,7 @@ public class ForecastListItemViewMvcImpl extends BaseViewMvc implements
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(adapter);
+        recyclerView.setHasFixedSize(true);
 
         dateFormat = new SimpleDateFormat("EEE, h aa, ", Locale.ENGLISH);
         keyFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);

@@ -1,5 +1,6 @@
 package com.akshansh.weatherapi.screens.main.main;
 
+import android.annotation.SuppressLint;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;

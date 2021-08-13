@@ -86,7 +86,6 @@ public class SyncActivity extends BaseActivity implements FetchWeatherUseCase.Li
     public void OnFetchWeatherSuccessful(CurrentWeatherData weatherData,
                                          WeatherForecastData weatherForecastData) {
         screensNavigator.syncToMainActivity();
-        finish();
     }
 
     @Override
@@ -138,14 +137,12 @@ public class SyncActivity extends BaseActivity implements FetchWeatherUseCase.Li
     @Override
     public void onPermissionDenied(String permission, int requestCode) {
         screensNavigator.toCitySelectActivity();
-        toastHelper.makeToast("Permission denied");
         finish();
     }
 
     @Override
     public void onPermissionDeniedPermanent(String permission, int requestCode) {
         screensNavigator.toCitySelectActivity();
-        toastHelper.makeToast("Permission denied. Go to app settings to grant permission");
         finish();
     }
 
