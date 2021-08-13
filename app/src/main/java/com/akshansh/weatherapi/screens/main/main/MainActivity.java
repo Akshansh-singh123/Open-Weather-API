@@ -47,7 +47,6 @@ public class MainActivity extends BaseActivity implements MainViewMvc.Listener,
 
     private boolean initialized = false;
     private MainViewMvc viewMvc;
-    private static final String TAG = "MainActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,18 +65,11 @@ public class MainActivity extends BaseActivity implements MainViewMvc.Listener,
         permissionHelper.registerListener(this);
         gpsLocationHelper.registerListener(this);
         gpsActivationHelper.registerListener(this);
-        Log.e(TAG, "onStart: "+initialized);
         if(!initialized) {
             fetchWeatherUpdatesByCachedInputs();
             checkPermissionAndFetchLocation();
             initialized = true;
         }
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        Log.e(TAG, "onStop: ");
     }
 
     @Override
@@ -91,7 +83,6 @@ public class MainActivity extends BaseActivity implements MainViewMvc.Listener,
         gpsActivationHelper.unregisterListener(this);
         gpsLocationHelper.unregisterListener(this);
         initialized = false;
-        Log.e(TAG, "onDestroy: ");
     }
 
     @Override

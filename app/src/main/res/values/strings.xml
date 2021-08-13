@@ -22,4 +22,5 @@
     <string name="edit_city_button">Edit City Button</string>
     <string name="city_search">Select City</string>
     <string name="next">Next</string>
+    <string name="fetching_weather_info">Fetching weather info</string>
 </resources>

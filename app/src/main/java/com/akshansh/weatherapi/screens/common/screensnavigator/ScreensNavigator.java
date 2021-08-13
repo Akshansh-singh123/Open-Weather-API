@@ -4,8 +4,10 @@ import android.content.Intent;
 import android.os.Handler;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 
 import com.akshansh.weatherapi.common.Constants;
+import com.akshansh.weatherapi.screens.common.dialogs.ProgressDialogFragment;
 import com.akshansh.weatherapi.screens.selectcity.SelectCityActivity;
 import com.akshansh.weatherapi.screens.main.main.MainActivity;
 
@@ -35,5 +37,11 @@ public class ScreensNavigator {
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK);
         activity.startActivity(intent);
         activity.finish();
+    }
+
+    public DialogFragment showProgressDialog() {
+        DialogFragment dialog = new ProgressDialogFragment();
+        dialog.show(activity.getSupportFragmentManager(),"ProgressDialog");
+        return dialog;
     }
 }

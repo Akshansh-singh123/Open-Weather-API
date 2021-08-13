@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
+import androidx.fragment.app.DialogFragment;
+
 import com.akshansh.weatherapi.city.FetchCitiesQueryUseCase;
 import com.akshansh.weatherapi.common.Constants;
 import com.akshansh.weatherapi.common.ViewMvcFactory;
@@ -12,6 +14,7 @@ import com.akshansh.weatherapi.networking.citymodels.City;
 import com.akshansh.weatherapi.networking.weathermodels.CurrentWeatherData;
 import com.akshansh.weatherapi.networking.weathermodels.WeatherForecastData;
 import com.akshansh.weatherapi.screens.common.BaseActivity;
+import com.akshansh.weatherapi.screens.common.dialogs.ProgressDialogFragment;
 import com.akshansh.weatherapi.screens.common.screensnavigator.ScreensNavigator;
 import com.akshansh.weatherapi.screens.common.toast.ToastHelper;
 import com.akshansh.weatherapi.screens.main.main.MainActivity;
@@ -38,6 +41,7 @@ public class SelectCityActivity extends BaseActivity implements
     private boolean listening = true;
     private final AtomicLong lastTypeTime = new AtomicLong(0L);
     private String searchText = "";
+    private DialogFragment dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +81,7 @@ public class SelectCityActivity extends BaseActivity implements
     @Override
     public void onCitySelected(City city) {
         fetchWeatherUseCase.fetchWeatherForecastByCityName(city.getCity(), Constants.METRIC,false);
+        dialog = screensNavigator.showProgressDialog();
     }
 
     private void dispatchSearch() {
@@ -121,6 +126,7 @@ public class SelectCityActivity extends BaseActivity implements
 
     @Override
     public void OnFetchWeatherSuccessful(CurrentWeatherData weatherData, WeatherForecastData weatherForecastData) {
+        dialog.dismiss();
         if(weatherData.getCodeOfDelivery().equals("200"))
             screensNavigator.CitySelectToMain();
         else
@@ -129,12 +135,14 @@ public class SelectCityActivity extends BaseActivity implements
 
     @Override
     public void OnFetchWeatherFailure() {
+        dialog.dismiss();
         toastHelper.makeToast("Failed to fetch weather for this city");
         finish();
     }
 
     @Override
     public void OnFetchWeatherNetworkError() {
+        dialog.dismiss();
         toastHelper.makeToast("Check your internet connection");
         finish();
     }
