@@ -118,7 +118,7 @@ public class SyncActivity extends BaseActivity implements FetchWeatherUseCase.Li
 
     @Override
     public void OnLocationFetchSuccessful(double latitude, double longitude) {
-        fetchWeatherUseCase.fetchWeatherForecastByLocation(latitude,longitude,Constants.METRIC);
+        fetchWeatherUseCase.fetchWeatherForecastByLocation(latitude,longitude,Constants.METRIC,false);
         hideProgressBar();
     }
 

@@ -26,9 +26,9 @@ public class FetchWeatherService implements FetchWeatherEndpoint {
     }
 
     @Override
-    public void fetchWeatherForecastByCity(String city, String units, Callback callback)
+    public void fetchWeatherForecastByCity(String city, String units, Callback callback, boolean fetchSynced)
             throws NetworkException {
-        if(weatherDataSyncHelper.isSynced()){
+        if(weatherDataSyncHelper.isSynced() && fetchSynced){
             callback.OnFetchWeatherSuccessful(weatherDataSyncHelper.getWeatherDataSynced(),
                     weatherDataSyncHelper.getWeatherForecastDataSynced());
         }
@@ -42,9 +42,9 @@ public class FetchWeatherService implements FetchWeatherEndpoint {
 
     @Override
     public void fetchWeatherForecastByLocation(double latitude, double longitude,
-                                               String units,
-                                               Callback callback) throws NetworkException {
-        if(weatherDataSyncHelper.isSynced()){
+                                               String units, Callback callback,
+                                               boolean fetchSynced) throws NetworkException {
+        if(weatherDataSyncHelper.isSynced() && fetchSynced){
             callback.OnFetchWeatherSuccessful(weatherDataSyncHelper.getWeatherDataSynced(),
                     weatherDataSyncHelper.getWeatherForecastDataSynced());
         }

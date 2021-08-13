@@ -17,6 +17,10 @@ import com.akshansh.weatherapi.screens.main.precipitationitem.PrecipitationListI
 import com.akshansh.weatherapi.screens.main.precipitationitem.PrecipitationListItemViewMvcImpl;
 import com.akshansh.weatherapi.screens.main.weatherdetailsitem.WeatherDetailsItemViewMvc;
 import com.akshansh.weatherapi.screens.main.weatherdetailsitem.WeatherDetailsViewMvcImpl;
+import com.akshansh.weatherapi.screens.selectcity.SelectCityViewMvc;
+import com.akshansh.weatherapi.screens.selectcity.SelectCityViewMvcImpl;
+import com.akshansh.weatherapi.screens.selectcity.citylist.CityListItemViewMvc;
+import com.akshansh.weatherapi.screens.selectcity.citylist.CityListItemViewMvcImpl;
 
 public class ViewMvcFactory {
     private final LayoutInflater inflater;
@@ -51,5 +55,13 @@ public class ViewMvcFactory {
 
     public DaySelectListItemViewMvc getDaySelectListItemViewMvc(ViewGroup parent) {
         return new DaySelectItemViewMvcImpl(inflater,parent);
+    }
+
+    public SelectCityViewMvc getSelectCityViewMvc(ViewGroup parent){
+        return new SelectCityViewMvcImpl(inflater,parent,this);
+    }
+
+    public CityListItemViewMvc getCityListItemViewMvc(ViewGroup parent){
+        return new CityListItemViewMvcImpl(inflater,parent);
     }
 }

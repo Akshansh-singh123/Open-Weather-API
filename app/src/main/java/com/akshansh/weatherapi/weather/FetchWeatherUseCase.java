@@ -19,7 +19,7 @@ public class FetchWeatherUseCase extends BaseObservable<FetchWeatherUseCase.List
         this.fetchWeatherEndpoint = fetchWeatherEndpoint;
     }
 
-    public void fetchWeatherForecastByCityName(String city, String units){
+    public void fetchWeatherForecastByCityName(String city, String units, boolean fetchSynced){
         try {
             fetchWeatherEndpoint.fetchWeatherForecastByCity(city,units,new FetchWeatherEndpoint.Callback() {
                 @Override
@@ -36,7 +36,7 @@ public class FetchWeatherUseCase extends BaseObservable<FetchWeatherUseCase.List
                         listener.OnFetchWeatherFailure();
                     }
                 }
-            });
+            },fetchSynced);
         } catch (NetworkException e) {
             for(Listener listener: getListeners()){
                 listener.OnFetchWeatherNetworkError();
@@ -44,7 +44,7 @@ public class FetchWeatherUseCase extends BaseObservable<FetchWeatherUseCase.List
         }
     }
 
-    public void fetchWeatherForecastByLocation(double latitude, double longitude, String units){
+    public void fetchWeatherForecastByLocation(double latitude, double longitude, String units,boolean fetchSynced){
         try {
             fetchWeatherEndpoint.fetchWeatherForecastByLocation(latitude,longitude,
                     units,new FetchWeatherEndpoint.Callback() {
@@ -62,7 +62,7 @@ public class FetchWeatherUseCase extends BaseObservable<FetchWeatherUseCase.List
                         listener.OnFetchWeatherFailure();
                     }
                 }
-            });
+            },fetchSynced);
         } catch (NetworkException e) {
             for(Listener listener: getListeners()){
                 listener.OnFetchWeatherNetworkError();

@@ -1,7 +1,11 @@
 package com.akshansh.weatherapi.common.dependecyinjection.application;
 
+import com.akshansh.weatherapi.common.Constants;
 import com.akshansh.weatherapi.common.CustomApplication;
+import com.akshansh.weatherapi.common.dependecyinjection.CitiesApiRetrofit;
+import com.akshansh.weatherapi.common.dependecyinjection.OpenWeatherApiRetrofit;
 import com.akshansh.weatherapi.common.utils.WeatherDataSyncHelper;
+import com.akshansh.weatherapi.networking.city.CitiesAPI;
 import com.akshansh.weatherapi.networking.weather.OpenWeatherApi;
 
 import java.util.concurrent.ExecutorService;
@@ -12,7 +16,7 @@ import dagger.Provides;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-import static com.akshansh.weatherapi.common.Constants.ENDPOINT;
+import static com.akshansh.weatherapi.common.Constants.OPEN_WEATHER_API_ENDPOINT;
 
 @Module
 public class ApplicationModule {
@@ -30,16 +34,33 @@ public class ApplicationModule {
 
     @Provides
     @AppScope
-    public Retrofit getRetrofit() {
+    @OpenWeatherApiRetrofit
+    public Retrofit getOpenWeatherRetrofit() {
         return new Retrofit.Builder()
-                .baseUrl(ENDPOINT)
+                .baseUrl(OPEN_WEATHER_API_ENDPOINT)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
     }
 
     @Provides
     @AppScope
-    public OpenWeatherApi getOpenWeatherApi(Retrofit retrofit){
+    @CitiesApiRetrofit
+    public Retrofit getCitiesApiRetrofit(){
+        return new Retrofit.Builder()
+                .baseUrl(Constants.CITIES_API_ENDPOINT)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+    }
+
+    @Provides
+    @AppScope
+    public CitiesAPI getCitiesApi(@CitiesApiRetrofit Retrofit retrofit){
+        return retrofit.create(CitiesAPI.class);
+    }
+
+    @Provides
+    @AppScope
+    public OpenWeatherApi getOpenWeatherApi(@OpenWeatherApiRetrofit Retrofit retrofit){
         return retrofit.create(OpenWeatherApi.class);
     }
 

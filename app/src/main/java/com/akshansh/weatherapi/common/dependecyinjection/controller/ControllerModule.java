@@ -3,11 +3,15 @@ package com.akshansh.weatherapi.common.dependecyinjection.controller;
 import android.os.Handler;
 import android.os.Looper;
 
+import com.akshansh.weatherapi.city.FetchCitiesQueryUseCase;
+import com.akshansh.weatherapi.city.GetCitiesQueryEndpoint;
 import com.akshansh.weatherapi.common.dependecyinjection.activity.ActivityModule;
 import com.akshansh.weatherapi.common.utils.GPSActivationHelper;
 import com.akshansh.weatherapi.common.utils.GPSLocationHelper;
 import com.akshansh.weatherapi.common.utils.InternetConnectionTester;
 import com.akshansh.weatherapi.common.utils.PermissionHelper;
+import com.akshansh.weatherapi.networking.city.CitiesAPI;
+import com.akshansh.weatherapi.networking.city.GetCitiesService;
 import com.akshansh.weatherapi.networking.weather.OpenWeatherApi;
 import com.akshansh.weatherapi.screens.common.screensnavigator.ScreensNavigator;
 import com.akshansh.weatherapi.common.utils.WeatherDataSyncHelper;
@@ -50,5 +54,15 @@ public class ControllerModule {
     @Provides
     public FetchWeatherUseCase getFetchWeatherUseCase(FetchWeatherEndpoint fetchWeatherEndpoint){
         return new FetchWeatherUseCase(fetchWeatherEndpoint);
+    }
+
+    @Provides
+    public GetCitiesQueryEndpoint getCitiesQueryEndpoint(CitiesAPI citiesAPI){
+        return new GetCitiesService(citiesAPI);
+    }
+
+    @Provides
+    public FetchCitiesQueryUseCase getFetchCitiesQueryUseCase(GetCitiesQueryEndpoint endpoint){
+        return new FetchCitiesQueryUseCase(endpoint);
     }
 }

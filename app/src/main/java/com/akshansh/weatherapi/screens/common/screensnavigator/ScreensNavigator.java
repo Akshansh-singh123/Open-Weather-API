@@ -5,6 +5,7 @@ import android.os.Handler;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.akshansh.weatherapi.common.Constants;
 import com.akshansh.weatherapi.screens.selectcity.SelectCityActivity;
 import com.akshansh.weatherapi.screens.main.main.MainActivity;
 
@@ -27,5 +28,12 @@ public class ScreensNavigator {
 
     public void toCitySelectActivity() {
         activity.startActivity(new Intent(activity, SelectCityActivity.class));
+    }
+
+    public void CitySelectToMain() {
+        Intent intent = new Intent(activity, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK);
+        activity.startActivity(intent);
+        activity.finish();
     }
 }

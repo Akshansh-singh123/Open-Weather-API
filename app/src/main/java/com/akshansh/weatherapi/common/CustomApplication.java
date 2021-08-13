@@ -6,8 +6,6 @@ import com.akshansh.weatherapi.common.dependecyinjection.application.Application
 import com.akshansh.weatherapi.common.dependecyinjection.application.ApplicationModule;
 import com.akshansh.weatherapi.common.dependecyinjection.application.DaggerApplicationComponent;
 
-import dagger.android.DaggerApplication;
-
 public class CustomApplication extends Application {
     private ApplicationComponent applicationComponent;
 

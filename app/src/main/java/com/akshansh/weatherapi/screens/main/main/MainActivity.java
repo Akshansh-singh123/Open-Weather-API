@@ -47,6 +47,7 @@ public class MainActivity extends BaseActivity implements MainViewMvc.Listener,
 
     private boolean initialized = false;
     private MainViewMvc viewMvc;
+    private static final String TAG = "MainActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,11 +66,18 @@ public class MainActivity extends BaseActivity implements MainViewMvc.Listener,
         permissionHelper.registerListener(this);
         gpsLocationHelper.registerListener(this);
         gpsActivationHelper.registerListener(this);
+        Log.e(TAG, "onStart: "+initialized);
         if(!initialized) {
             fetchWeatherUpdatesByCachedInputs();
             checkPermissionAndFetchLocation();
             initialized = true;
         }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.e(TAG, "onStop: ");
     }
 
     @Override
@@ -83,6 +91,7 @@ public class MainActivity extends BaseActivity implements MainViewMvc.Listener,
         gpsActivationHelper.unregisterListener(this);
         gpsLocationHelper.unregisterListener(this);
         initialized = false;
+        Log.e(TAG, "onDestroy: ");
     }
 
     @Override
@@ -151,7 +160,7 @@ public class MainActivity extends BaseActivity implements MainViewMvc.Listener,
     @Override
     public void OnLocationFetchSuccessful(double latitude, double longitude) {
         viewMvc.setGPSButtonVisible(false);
-        fetchWeatherUseCase.fetchWeatherForecastByLocation(latitude,longitude,Constants.METRIC);
+        fetchWeatherUseCase.fetchWeatherForecastByLocation(latitude,longitude,Constants.METRIC,false);
     }
 
     @WorkerThread
@@ -228,10 +237,10 @@ public class MainActivity extends BaseActivity implements MainViewMvc.Listener,
                 weatherDataSyncHelper.getLongitude() != null){
             double latitude = weatherDataSyncHelper.getLatitude();
             double longitude = weatherDataSyncHelper.getLongitude();
-            fetchWeatherUseCase.fetchWeatherForecastByLocation(latitude,longitude,Constants.METRIC);
+            fetchWeatherUseCase.fetchWeatherForecastByLocation(latitude,longitude,Constants.METRIC,true);
         }else if(weatherDataSyncHelper.getCity() != null){
             String city = weatherDataSyncHelper.getCity();
-            fetchWeatherUseCase.fetchWeatherForecastByCityName(city,Constants.METRIC);
+            fetchWeatherUseCase.fetchWeatherForecastByCityName(city,Constants.METRIC,true);
             viewMvc.enableEditCityButton();
         }else{
             throw new RuntimeException("invalid state of sync");

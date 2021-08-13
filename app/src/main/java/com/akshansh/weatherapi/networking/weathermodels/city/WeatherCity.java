@@ -3,7 +3,7 @@ package com.akshansh.weatherapi.networking.weathermodels.city;
 import com.akshansh.weatherapi.networking.weathermodels.coordinates.Coordinates;
 import com.google.gson.annotations.SerializedName;
 
-public class City {
+public class WeatherCity {
     private long id;
     @SerializedName("name")
     private String cityName;

@@ -1,6 +1,6 @@
 package com.akshansh.weatherapi.networking.weathermodels;
 
-import com.akshansh.weatherapi.networking.weathermodels.city.City;
+import com.akshansh.weatherapi.networking.weathermodels.city.WeatherCity;
 import com.akshansh.weatherapi.networking.weathermodels.forecastdata.ForecastData;
 import com.google.gson.annotations.SerializedName;
 
@@ -14,7 +14,7 @@ public class WeatherForecastData {
     private int weatherDataCount;
     @SerializedName("list")
     private List<ForecastData> forecastData;
-    private City city;
+    private WeatherCity weatherCity;
 
     public String getDeliveryCode() {
         return deliveryCode;
@@ -32,8 +32,8 @@ public class WeatherForecastData {
         return forecastData;
     }
 
-    public City getCity() {
-        return city;
+    public WeatherCity getCity() {
+        return weatherCity;
     }
 
     @Override
@@ -43,7 +43,7 @@ public class WeatherForecastData {
                 ", message='" + message + '\'' +
                 ", weatherDataCount=" + weatherDataCount +
                 ", forecastData=" + forecastData +
-                ", city=" + city +
+                ", city=" + weatherCity +
                 '}';
     }
 }

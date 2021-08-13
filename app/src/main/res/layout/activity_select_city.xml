@@ -4,25 +4,60 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".screens.selectcity.SelectCityActivity">
-
+    android:layout_height="match_parent">
+    <TextView
+        android:id="@+id/titleTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/city_search"
+        android:textSize="36sp"
+        android:textColor="?colorPrimary"
+        android:layout_margin="16dp"
+        app:layout_constraintTop_toTopOf="parent"/>
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/city_input_text"
+        android:id="@+id/text_input_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
+        app:helperTextEnabled="true"
+        app:helperText="Select the city to fetch the weather forecast of that city"
         android:hint="@string/enter_your_location"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/titleTextView">
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/text_input_editText"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            android:inputType="textPersonName"
+            android:maxLines="1"/>
     </com.google.android.material.textfield.TextInputLayout>
 
+    <FrameLayout
+        android:id="@+id/progress_frame"
+        android:layout_width="match_parent"
+        android:layout_height="256dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_input_layout">
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:layout_gravity="center"/>
+        <TextView
+            android:id="@+id/message_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            tools:text="City not found"
+            android:textSize="20sp"
+            android:layout_gravity="center"/>
+    </FrameLayout>
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/city_input_text" />
+        app:layout_constraintTop_toBottomOf="@+id/text_input_layout" />
 </androidx.constraintlayout.widget.ConstraintLayout>

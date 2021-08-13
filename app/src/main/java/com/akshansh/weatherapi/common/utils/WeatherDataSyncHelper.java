@@ -93,10 +93,16 @@ public class WeatherDataSyncHelper {
             editor.putString(WEATHER_FORECAST_DATA,weatherForecastJson);
         if(latitude != null)
             editor.putString(LATITUDE_DATA, String.valueOf(latitude));
+        else
+            editor.putString(LATITUDE_DATA,"");
         if(longitude != null)
             editor.putString(LONGITUDE_DATA, String.valueOf(longitude));
+        else
+            editor.putString(LONGITUDE_DATA, "");
         if(city != null)
             editor.putString(CITY_NAME_DATA, city);
+        else
+            editor.putString(CITY_NAME_DATA, "");
         editor.apply();
     }
 
@@ -105,16 +111,19 @@ public class WeatherDataSyncHelper {
         String weatherForecastJson = sharedPreferences.getString(WEATHER_FORECAST_DATA, null);
         String storedLatitude = sharedPreferences.getString(LATITUDE_DATA,null);
         String storedLongitude = sharedPreferences.getString(LONGITUDE_DATA,null);
-        city = sharedPreferences.getString(CITY_NAME_DATA, null);
+        String storedCity = sharedPreferences.getString(CITY_NAME_DATA, null);
         Gson gson = new Gson();
         if(currentWeatherJson != null)
             weatherDataSynced = gson.fromJson(currentWeatherJson,CurrentWeatherData.class);
         if(weatherForecastJson != null)
             weatherForecastDataSynced = gson.fromJson(weatherForecastJson,WeatherForecastData.class);
-        if(storedLatitude != null)
-            latitude = Double.parseDouble(storedLatitude);
-        if(storedLongitude != null)
-            longitude = Double.parseDouble(storedLongitude);
+        if(storedLatitude != null) {
+            latitude = storedLatitude.equals("")?null:Double.parseDouble(storedLatitude);
+        }
+        if(storedLongitude != null) {
+            longitude = storedLongitude.equals("")?null:Double.parseDouble(storedLongitude);
+        }
+        city = storedCity.equals("")?null:storedCity;
     }
 
     public void clearLocalWeatherData(){
@@ -124,7 +133,6 @@ public class WeatherDataSyncHelper {
     }
 
     public boolean isSynced(){
-        return weatherDataSynced != null && weatherForecastDataSynced != null &&
-                latitude != null && longitude != null;
+        return weatherDataSynced != null && weatherForecastDataSynced != null;
     }
 }

@@ -5,12 +5,14 @@ import com.akshansh.weatherapi.R;
 import java.util.HashMap;
 
 public class Constants {
-    public static final String ENDPOINT = "https://api.openweathermap.org/data/2.5/";
+    public static final String OPEN_WEATHER_API_ENDPOINT = "https://api.openweathermap.org/data/2.5/";
+    public static final String CITIES_API_ENDPOINT = "https://akshansh-api-cities.herokuapp.com/";
     public static final String API_KEY = "86a9df1972a8040648c1cb4a6a1da9e2";
     public static final int LOCATION_REQUEST_CODE = 100;
     public static final int GPS_ACTIVATION_REQUEST_CODE = 101;
     public static final String METRIC = "metric";
     public static final long LOCATION_FETCH_TIMEOUT = 60000;
+    public static final int MAIN_TO_CITY_SELECT = 102;
     private static final HashMap<String, Integer> dayDrawables = new HashMap<>();
     private static final HashMap<String, Integer> nightDrawables = new HashMap<>();
 
