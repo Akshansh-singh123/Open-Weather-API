@@ -38,7 +38,7 @@ public class WeatherDetailsViewMvcImpl extends BaseViewMvc implements WeatherDet
         windDirectionTextView = binding.windDirectionText;
         pressureTextView = binding.pressureText;
         sunsetTimeTextView = binding.sunsetText;
-        timeFormat = new SimpleDateFormat("hh:mm a",Locale.ENGLISH);
+        timeFormat = new SimpleDateFormat("hh:mm a (z)",Locale.ENGLISH);
     }
 
     @Override
@@ -56,7 +56,8 @@ public class WeatherDetailsViewMvcImpl extends BaseViewMvc implements WeatherDet
     }
 
     private void setSunriseTimeText(long sunriseTime) {
-        String sunriseTimeText = timeFormat.format(new Date(sunriseTime*1000L));
+        Date date = new Date(sunriseTime*1000L);
+        String sunriseTimeText = timeFormat.format(date);
         sunriseTimeTextView.setText(String.format("%s",sunriseTimeText));
     }
 
@@ -70,6 +71,7 @@ public class WeatherDetailsViewMvcImpl extends BaseViewMvc implements WeatherDet
     }
 
     private void setWindDirectionText(double windDirection) {
+        windDirectionTextView.setSelected(true);
         windDirectionTextView.setText(String.format(Locale.ENGLISH,
                 "%.2f%s",windDirection, getString(R.string.degrees_symbol)));
     }
@@ -83,6 +85,7 @@ public class WeatherDetailsViewMvcImpl extends BaseViewMvc implements WeatherDet
     }
 
     private void setWindSpeed(double speed) {
+        windSpeedTextView.setSelected(true);
         windSpeedTextView.setText(String.format(Locale.ENGLISH,"%.2f m/sec",speed));
     }
 

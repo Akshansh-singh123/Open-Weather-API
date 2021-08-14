@@ -134,7 +134,7 @@
             app:trackColor="@color/white"
             app:labelStyle="@style/Widget.MaterialComponents.Tooltip"
             app:labelBehavior="floating"
-            app:tickColorInactive="@color/secondaryDarkColor"
+            app:tickColorInactive="@color/black"
             tools:stepSize="3"
             tools:valueFrom="0"
             tools:valueTo="21"

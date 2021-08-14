@@ -7,7 +7,7 @@
     <string name="clouds">Clouds %</string>
     <string name="sunrise">Sunrise</string>
     <string name="humidity">Humidity</string>
-    <string name="wind_direction">Wind direction</string>
+    <string name="wind_direction">Wind dir</string>
     <string name="pressure">Pressure</string>
     <string name="sunset">Sunset</string>
     <string name="legacy_icon">Legacy icon</string>

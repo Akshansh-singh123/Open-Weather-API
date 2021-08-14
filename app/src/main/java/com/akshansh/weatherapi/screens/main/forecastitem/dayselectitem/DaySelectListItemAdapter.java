@@ -36,6 +36,7 @@ public class DaySelectListItemAdapter extends RecyclerView.Adapter<DaySelectItem
         this.forecastDataTreeMap = new TreeMap<>(forecastDataTreeMap);
         valueSet = new ArrayList<>(forecastDataTreeMap.values());
         keySey = new ArrayList<>(forecastDataTreeMap.keySet());
+        selectedItemIndex = 0;
         notifyDataSetChanged();
     }
 
@@ -60,8 +61,10 @@ public class DaySelectListItemAdapter extends RecyclerView.Adapter<DaySelectItem
 
     @Override
     public void OnDaySelected(String key) {
+        int lastSelectedItem = selectedItemIndex;
         selectedItemIndex = keySey.indexOf(key);
         listener.OnDaySelected(key);
-        notifyDataSetChanged();
+        notifyItemChanged(lastSelectedItem);
+        notifyItemChanged(selectedItemIndex);
     }
 }
